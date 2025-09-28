@@ -521,14 +521,14 @@
                             </div>
 
                             <div class="charge-item bg-yellow-50 hover:bg-yellow-100 p-3 rounded-lg cursor-pointer border border-yellow-200 transition-all" 
-                                 data-charge="mountain" data-fine="0" data-jail="0" data-special="X4 ของคดี(ค่าปรับ)">
+                                 data-charge="mountain" data-fine="0" data-jail="0" data-special="X2 ของคดี(ค่าปรับ)">
                                 <div class="flex justify-between items-center">
                                     <div>
                                         <h4 class="font-medium text-gray-800">ขึ้นเขา</h4>
                                         <p class="text-sm text-gray-600">การขึ้นไปบนเขาโดยไม่ได้รับอนุญาต</p>
                                     </div>
                                     <div class="text-right text-sm">
-                                        <div class="text-purple-600 font-bold">X4 ของคดี</div>
+                                        <div class="text-purple-600 font-bold">X2 ของคดี</div>
                                         <div class="text-orange-600">- นาที</div>
                                     </div>
                                 </div>
@@ -1004,7 +1004,7 @@
             trespassing: { name: 'บุกรุกเคหะสถาน / บุกรุกบ้าน', desc: 'การบุกรุกเข้าไปในที่อยู่อาศัยของผู้อื่น', fine: 50000, jail: 15 },
             showIllegal: { name: 'โชว์ของงานดำต่อหน้าเจ้าหน้าที่', desc: 'การแสดงสิ่งของผิดกฎหมายต่อหน้าเจ้าหน้าที่', fine: 5000, jail: 8 },
             darkCar: { name: 'นำรถทึบมาทำงานดำ', desc: 'การใช้รถที่มีกระจกทึบในการกระทำผิด', fine: 0, jail: 0, special: 'X4 ของคดี(ค่าปรับ)' },
-            mountain: { name: 'ขึ้นเขา', desc: 'การขึ้นไปบนเขาโดยไม่ได้รับอนุญาต', fine: 0, jail: 0, special: 'X4 ของคดี(ค่าปรับ)' },
+            mountain: { name: 'ขึ้นเขา', desc: 'การขึ้นไปบนเขาโดยไม่ได้รับอนุญาต', fine: 0, jail: 0, special: 'X2 ของคดี(ค่าปรับ)' },
             
             // ของผิดกฎหมาย
             cement: { name: 'ครอบครองปูน', desc: 'มีปูนในครอบครองโดยผิดกฎหมาย', fine: 2000, jail: 3, quantity: true },
@@ -1275,15 +1275,38 @@
                 return sum;
             }, 0);
             
-            // Apply multipliers to non-red cases only
+            // Apply multipliers to non-red cases only with specific combination rules
             let multiplier = 1;
+            let hasOutOfCity = false;
+            let hasDarkCar = false;
+            let hasMountain = false;
+            
             multiplierCharges.forEach(charge => {
                 if (charge.id === 'outOfCity') {
-                    multiplier *= 2;
-                } else if (charge.id === 'darkCar' || charge.id === 'mountain') {
-                    multiplier *= 4;
+                    hasOutOfCity = true;
+                } else if (charge.id === 'darkCar') {
+                    hasDarkCar = true;
+                } else if (charge.id === 'mountain') {
+                    hasMountain = true;
                 }
             });
+            
+            // Calculate multiplier based on specific combinations
+            if (hasMountain && hasOutOfCity && hasDarkCar) {
+                multiplier = 10; // ขึ้นเขา + ออกนอกเมือง + รถทึบ = 10x
+            } else if (hasMountain && hasOutOfCity) {
+                multiplier = 6;  // ขึ้นเขา + ออกนอกเมือง = 6x
+            } else if (hasMountain && hasDarkCar) {
+                multiplier = 8;  // ขึ้นเขา + รถทึบ = 8x
+            } else if (hasOutOfCity && hasDarkCar) {
+                multiplier = 6;  // ออกนอกเมือง + รถทึบ = 6x (2x + 4x = 6x)
+            } else if (hasMountain) {
+                multiplier = 2;  // ขึ้นเขา = 2x
+            } else if (hasOutOfCity) {
+                multiplier = 2;  // ออกนอกเมือง = 2x
+            } else if (hasDarkCar) {
+                multiplier = 4;  // รถทึบ = 4x
+            }
             
             // Calculate final totals
             const multipliedFine = baseFine * multiplier;
@@ -1600,5 +1623,5 @@
             initializeMusicControls();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980a5203c69174d4',t:'MTc1ODEzMDExMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986348bb67f8731f',t:'MTc1OTA2Mjk2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
