@@ -1599,32 +1599,17 @@
                 return;
             }
             
-            let copyText = '=== ข้อหาที่ถูกตั้ง ===\n\n';
-            
-            selectedCharges.forEach((charge, index) => {
-                copyText += `${index + 1}. ${charge.name}\n`;
+            // สร้างรายการข้อหาแบบเรียงกันไป
+            let chargeNames = [];
+            selectedCharges.forEach(charge => {
                 if (charge.quantity > 1) {
-                    copyText += `   จำนวน: ${charge.quantity}\n`;
-                }
-                if (charge.special) {
-                    copyText += `   ${charge.special}\n`;
+                    chargeNames.push(`${charge.name} (${charge.quantity})`);
                 } else {
-                    copyText += `   ค่าปรับ: ${charge.fine.toLocaleString()} XinCoin\n`;
+                    chargeNames.push(charge.name);
                 }
-                copyText += `   เวลาจำคุก: ${charge.jail} นาที\n\n`;
             });
             
-            // Get calculated totals
-            const totalFineElement = document.getElementById('totalFine');
-            const totalJailElement = document.getElementById('totalJail');
-            const bailAmountElement = document.getElementById('bailAmount');
-            
-            if (totalFineElement && totalJailElement && bailAmountElement) {
-                copyText += '=== สรุปผลการคำนวณ ===\n';
-                copyText += `ค่าปรับรวม: ${totalFineElement.textContent}\n`;
-                copyText += `เวลาจำคุกรวม: ${totalJailElement.textContent}\n`;
-                copyText += `ค่าประกันตัว: ${bailAmountElement.textContent}\n`;
-            }
+            const copyText = chargeNames.join(', ');
             
             navigator.clipboard.writeText(copyText).then(() => {
                 // Show success feedback
@@ -1743,5 +1728,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98761a81c5324f52',t:'MTc1OTI2MDI5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98762caf35be4f52',t:'MTc1OTI2MTA0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
