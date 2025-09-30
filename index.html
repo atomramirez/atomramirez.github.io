@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบตำรวจ - หน้าหลัก</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            box-sizing: border-box;
+        }
+        
+        /* Enhanced Menu Cards with Beautiful Animations */
+        .menu-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(0);
+            position: relative;
+            overflow: hidden;
+        }
+        .menu-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15), 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .menu-card:hover::before {
+            left: 100%;
+        }
+        
+        /* Enhanced Button Styles */
+        .enhanced-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .enhanced-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .enhanced-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Background Animations */
+        @keyframes slowFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        @keyframes gentlePulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        
+        @keyframes driftLeft {
+            0% { transform: translateX(100vw) rotate(0deg); }
+            100% { transform: translateX(-100px) rotate(360deg); }
+        }
+        
+        @keyframes driftRight {
+            0% { transform: translateX(-100px) rotate(0deg); }
+            100% { transform: translateX(100vw) rotate(-360deg); }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
+        
+        .bg-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .slow-float {
+            animation: slowFloat 6s ease-in-out infinite;
+        }
+        
+        .gentle-pulse {
+            animation: gentlePulse 4s ease-in-out infinite;
+        }
+        
+        .drift-left {
+            animation: driftLeft 25s linear infinite;
+        }
+        
+        .drift-right {
+            animation: driftRight 30s linear infinite;
+        }
+        
+        .twinkle {
+            animation: twinkle 3s ease-in-out infinite;
+        }
+        
+        /* Gradient Orbs */
+        .gradient-orb {
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+        
+        .gradient-orb-1 {
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.1) 50%, transparent 100%);
+        }
+        
+        .gradient-orb-2 {
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, rgba(147, 51, 234, 0.1) 50%, transparent 100%);
+        }
+        
+        .gradient-orb-3 {
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, rgba(236, 72, 153, 0.1) 50%, transparent 100%);
+        }
+        
+        /* Glowing Effect */
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .category-tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+        }
+        .category-content {
+            display: block;
+        }
+        .category-content.hidden {
+            display: none;
+        }
+        .page-content {
+            display: block;
+        }
+        .page-content.hidden {
+            display: none;
+        }
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .slider::-moz-range-thumb {
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 min-h-screen">
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none" style="z-index: 1;">
+        <!-- Floating Gradient Orbs -->
+        <div class="bg-element gradient-orb gradient-orb-1 w-32 h-32 slow-float" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+        <div class="bg-element gradient-orb gradient-orb-2 w-24 h-24 gentle-pulse" style="top: 20%; right: 10%; animation-delay: 1s;"></div>
+        <div class="bg-element gradient-orb gradient-orb-3 w-40 h-40 slow-float" style="bottom: 15%; left: 15%; animation-delay: 2s;"></div>
+        <div class="bg-element gradient-orb gradient-orb-1 w-20 h-20 gentle-pulse" style="top: 60%; right: 20%; animation-delay: 3s;"></div>
+        <div class="bg-element gradient-orb gradient-orb-2 w-28 h-28 slow-float" style="bottom: 30%; right: 5%; animation-delay: 4s;"></div>
+        
+        <!-- Drifting Elements -->
+        <div class="bg-element drift-left text-6xl opacity-20" style="top: 25%; animation-delay: 0s;">🚔</div>
+        <div class="bg-element drift-right text-4xl opacity-15" style="top: 45%; animation-delay: 5s;">⚖️</div>
+        <div class="bg-element drift-left text-5xl opacity-10" style="top: 70%; animation-delay: 10s;">🏛️</div>
+        <div class="bg-element drift-right text-3xl opacity-20" style="top: 15%; animation-delay: 15s;">👮‍♂️</div>
+        
+        <!-- Twinkling Stars -->
+        <div class="bg-element twinkle w-2 h-2 bg-white rounded-full" style="top: 12%; left: 25%; animation-delay: 0s;"></div>
+        <div class="bg-element twinkle w-1 h-1 bg-blue-200 rounded-full" style="top: 35%; left: 70%; animation-delay: 1s;"></div>
+        <div class="bg-element twinkle w-2 h-2 bg-purple-200 rounded-full" style="top: 55%; left: 40%; animation-delay: 2s;"></div>
+        <div class="bg-element twinkle w-1 h-1 bg-white rounded-full" style="top: 75%; left: 80%; animation-delay: 3s;"></div>
+        <div class="bg-element twinkle w-2 h-2 bg-blue-300 rounded-full" style="top: 25%; left: 90%; animation-delay: 4s;"></div>
+        <div class="bg-element twinkle w-1 h-1 bg-purple-300 rounded-full" style="top: 85%; left: 15%; animation-delay: 5s;"></div>
+        
+        <!-- Subtle Geometric Shapes -->
+        <div class="bg-element slow-float opacity-10" style="top: 40%; left: 8%; animation-delay: 1s;">
+            <div class="w-16 h-16 border-2 border-white/20 rotate-45"></div>
+        </div>
+        <div class="bg-element gentle-pulse opacity-15" style="top: 65%; right: 15%; animation-delay: 3s;">
+            <div class="w-12 h-12 border-2 border-blue-300/30 rounded-full"></div>
+        </div>
+        <div class="bg-element slow-float opacity-10" style="top: 30%; right: 35%; animation-delay: 2s;">
+            <div class="w-8 h-8 bg-purple-400/20 transform rotate-12"></div>
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop hidden>
+        <!-- เพลงจะถูกโหลดผ่าน JavaScript แทน -->
+    </audio>
+
+    <!-- Navigation -->
+    <nav class="bg-white/10 backdrop-blur-md border-b border-white/20 shadow-lg shadow-blue-500/20 glow-effect relative z-10">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-white flex items-center float-animation">
+                    🚔 ระบบตำรวจ
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <!-- Music Controls -->
+                    <div class="flex items-center space-x-2 bg-white/10 rounded-lg px-3 py-2 glow-effect">
+                        <button id="muteBtn" class="text-white hover:text-blue-200 transition-colors" title="เปิด/ปิดเสียง">
+                            🔊
+                        </button>
+                        <input type="range" id="volumeSlider" min="0" max="100" value="20" 
+                               class="w-20 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider">
+                        <span id="volumeDisplay" class="text-white text-sm font-medium">20%</span>
+                    </div>
+                    <button onclick="goToHomePage()" id="homeBtn" class="text-white hover:text-blue-200 transition-colors font-medium enhanced-btn bg-white/10 px-4 py-2 rounded-lg">
+                        🏠 หน้าหลัก
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="page-content min-h-screen flex items-center justify-center relative z-10">
+        <div class="text-center max-w-2xl mx-auto px-4">
+            <!-- Animated Police Badge -->
+            <div class="mb-8 float-animation">
+                <div class="text-8xl mb-4">🚔</div>
+                <div class="w-32 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto rounded-full animate-pulse glow-effect"></div>
+            </div>
+            
+            <!-- Title with gradient text -->
+            <h1 class="text-6xl font-bold bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent mb-4 animate-pulse">
+                ระบบตำรวจ
+            </h1>
+            
+            <!-- Enter Button -->
+            <button onclick="enterSystem()" id="enterSystemBtn" class="group relative enhanced-btn bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-bold py-5 px-10 rounded-full text-xl transition-all duration-500 transform hover:scale-110 hover:shadow-2xl hover:shadow-blue-500/50 animate-pulse">
+                <span class="relative z-10 flex items-center justify-center">
+                    <span class="mr-3 text-2xl">🚪</span>
+                    กดเพื่อเข้าใช้งาน
+                    <span class="ml-3 group-hover:translate-x-2 transition-transform duration-300 text-2xl">→</span>
+                </span>
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div id="mainContent" class="container mx-auto px-4 py-8 relative z-10">
+        <!-- Home Page -->
+        <div id="homePage" class="page-content hidden">
+            <!-- Hero Section -->
+            <div class="text-center mb-16 relative">
+                <!-- Animated Background Elements -->
+                <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div class="absolute top-10 left-10 w-20 h-20 bg-white/5 rounded-full animate-pulse glow-effect"></div>
+                    <div class="absolute top-32 right-20 w-16 h-16 bg-blue-300/10 rounded-full animate-bounce glow-effect" style="animation-delay: 0.5s;"></div>
+                    <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-white/5 rounded-full animate-pulse glow-effect" style="animation-delay: 1s;"></div>
+                    <div class="absolute top-20 right-1/3 w-8 h-8 bg-blue-200/10 rounded-full animate-bounce glow-effect" style="animation-delay: 1.5s;"></div>
+                </div>
+
+                <!-- Main Title with Gradient -->
+                <div class="relative z-10">
+                    <div class="inline-block mb-6">
+                        <div class="text-8xl mb-4 float-animation">🚔</div>
+                        <div class="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto rounded-full animate-pulse glow-effect"></div>
+                    </div>
+                    
+                    <h1 class="text-6xl md:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent mb-6 leading-tight">
+                        ระบบตำรวจ
+                    </h1>
+                    
+                    <div class="max-w-2xl mx-auto">
+                        <p class="text-blue-200/80 text-lg">เลือกเมนูที่ต้องการใช้งานด้านล่าง</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Menu 1: กฎประเทศ -->
+                <div class="menu-card group bg-gradient-to-br from-white to-blue-50 rounded-3xl shadow-2xl p-8 text-center cursor-pointer relative overflow-hidden border border-blue-100/50" onclick="openExternalLink('https://docs.google.com/spreadsheets/d/1C7pI2SagKgK7cdsiJzZvtRmtlBZRYpbdhWJsrvZW74Q/edit?gid=467740329#gid=467740329')">
+                    <!-- Background Pattern -->
+                    <div class="absolute inset-0 opacity-5">
+                        <div class="absolute top-4 right-4 text-6xl">📋</div>
+                        <div class="absolute bottom-4 left-4 text-4xl">⚖️</div>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="relative z-10">
+                        <div class="text-7xl mb-6 group-hover:scale-110 transition-transform duration-300 float-animation">📋</div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 group-hover:text-blue-700 transition-colors">กฎประเทศ</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">ดูกฎหมายและระเบียบของประเทศ รวมถึงข้อบังคับต่างๆ</p>
+                        
+                        <!-- Action Button -->
+                        <div class="enhanced-btn bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 text-white px-6 py-3 rounded-full inline-block group-hover:from-blue-600 group-hover:via-purple-600 group-hover:to-blue-700 transition-all duration-300 shadow-lg group-hover:shadow-xl hover:shadow-blue-500/50">
+                            <span class="text-sm font-medium flex items-center">
+                                <span class="mr-2">📖</span>
+                                คลิกเพื่อดู
+                                <span class="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Hover Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                <!-- Menu 2: ค่าปรับ -->
+                <div class="menu-card group bg-gradient-to-br from-white to-green-50 rounded-3xl shadow-2xl p-8 text-center cursor-pointer relative overflow-hidden border border-green-100/50" onclick="showPage('finePage')">
+                    <!-- Background Pattern -->
+                    <div class="absolute inset-0 opacity-5">
+                        <div class="absolute top-4 right-4 text-6xl">💰</div>
+                        <div class="absolute bottom-4 left-4 text-4xl">🧮</div>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="relative z-10">
+                        <div class="text-7xl mb-6 group-hover:scale-110 transition-transform duration-300 float-animation">💰</div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 group-hover:text-green-700 transition-colors">ค่าปรับ</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">คำนวณค่าปรับและเวลาจำคุก พร้อมระบบคำนวณอัตโนมัติ</p>
+                        
+                        <!-- Action Button -->
+                        <div class="enhanced-btn bg-gradient-to-r from-green-500 via-emerald-600 to-green-600 text-white px-6 py-3 rounded-full inline-block group-hover:from-green-600 group-hover:via-emerald-700 group-hover:to-green-700 transition-all duration-300 shadow-lg group-hover:shadow-xl hover:shadow-green-500/50">
+                            <span class="text-sm font-medium flex items-center">
+                                <span class="mr-2">🚀</span>
+                                เข้าใช้งาน
+                                <span class="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Hover Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                <!-- Menu 3: กฎตำรวจ -->
+                <div class="menu-card group bg-gradient-to-br from-white to-purple-50 rounded-3xl shadow-2xl p-8 text-center cursor-pointer relative overflow-hidden border border-purple-100/50" onclick="openExternalLink('https://docs.google.com/spreadsheets/d/1pn4xMhuGm7IwTWLBw1t1mHRyHbO9h21eLqsn-1xdFJo/edit?gid=0#gid=0')">
+                    <!-- Background Pattern -->
+                    <div class="absolute inset-0 opacity-5">
+                        <div class="absolute top-4 right-4 text-6xl">👮‍♂️</div>
+                        <div class="absolute bottom-4 left-4 text-4xl">🛡️</div>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="relative z-10">
+                        <div class="text-7xl mb-6 group-hover:scale-110 transition-transform duration-300 float-animation">👮‍♂️</div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 group-hover:text-purple-700 transition-colors">กฎตำรวจ</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">กฎระเบียบและข้อปฏิบัติตำรวจ สำหรับเจ้าหน้าที่</p>
+                        
+                        <!-- Action Button -->
+                        <div class="enhanced-btn bg-gradient-to-r from-purple-500 via-pink-600 to-purple-600 text-white px-6 py-3 rounded-full inline-block group-hover:from-purple-600 group-hover:via-pink-700 group-hover:to-purple-700 transition-all duration-300 shadow-lg group-hover:shadow-xl hover:shadow-purple-500/50">
+                            <span class="text-sm font-medium flex items-center">
+                                <span class="mr-2">👁️</span>
+                                คลิกเพื่อดู
+                                <span class="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Hover Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fine Calculation Page -->
+        <div id="finePage" class="page-content hidden">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-white mb-2 float-animation">💰 ระบบคำนวณค่าปรับและจำคุก </h1>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Left Panel - Charges Selection -->
+                <div class="bg-white rounded-xl shadow-2xl p-6 glow-effect">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        ⚖️ เลือกข้อหา
+                    </h2>
+                    
+                    <!-- Search Box -->
+                    <div class="mb-4">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="🔍 ค้นหาข้อหา... (เช่น หลบหนี, ครอบครอง, ทำร้าย)" 
+                                   class="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all glow-effect">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-400">🔍</span>
+                            </div>
+                            <button id="clearSearch" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 hidden">
+                                <span class="text-lg">✕</span>
+                            </button>
+                        </div>
+                        <div id="searchResults" class="mt-2 text-sm text-gray-600 hidden">
+                            <span id="searchCount">0</span> ผลลัพธ์ที่พบ
+                        </div>
+                    </div>
+
+                    <!-- Category Tabs -->
+                    <div class="flex space-x-2 mb-4 border-b">
+                        <button class="category-tab active px-4 py-2 font-medium text-blue-600 border-b-2 border-blue-600 enhanced-btn" data-category="general">
+                            ค่าปรับปกติ
+                        </button>
+                        <button class="category-tab px-4 py-2 font-medium text-gray-600 hover:text-blue-600 enhanced-btn" data-category="illegal">
+                            ของผิดกฎหมาย
+                        </button>
+                        <button class="category-tab px-4 py-2 font-medium text-gray-600 hover:text-blue-600 enhanced-btn" data-category="serious">
+                            คดีแดง
+                        </button>
+                    </div>
+
+                    <!-- Charges List -->
+                    <div id="chargesList" class="space-y-2 max-h-96 overflow-y-auto">
+                        <!-- General Charges -->
+                        <div class="category-content" data-category="general">
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('fight', 10000, 10)" data-charge="fight" data-fine="10000" data-jail="10" data-keywords="ทะเลาะ วิวาท ต่อสู้ ชก">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">ทะเลาะวิวาท</h4>
+                                        <p class="text-sm text-gray-600">การทะเลาะวิวาทในที่สาธารณะ</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">10,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('disturbance', 5000, 5)" data-charge="disturbance" data-fine="5000" data-jail="5" data-keywords="วุ่นวาย รบกวน ส่งเสียงดัง">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">สร้างความวุ่นวาย ทุกรูปแบบ</h4>
+                                        <p class="text-sm text-gray-600">การกระทำที่ก่อให้เกิดความวุ่นวายในสังคม</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">5,000 XC</div>
+                                        <div class="text-orange-600">5 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('mask', 3000, 5)" data-charge="mask" data-fine="3000" data-jail="5" data-keywords="หน้ากาก ปิดบัง ใบหน้า">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🎭 ใส่หน้ากาก หรือปิดบังใบหน้า</h4>
+                                        <p class="text-sm text-gray-600">การปิดบังใบหน้าในที่สาธารณะ</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">3,000 XC</div>
+                                        <div class="text-orange-600">5 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('assault', 20000, 10)" data-charge="assault" data-fine="20000" data-jail="10" data-keywords="ทำร้าย ร่างกาย เจตนา ประชาชน">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">👊 เจตนาทำร้ายร่างกาย - ประชาชน</h4>
+                                        <p class="text-sm text-gray-600">การทำร้ายร่างกายผู้อื่นโดยเจตนา</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">20,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('kidnap', 10000, 10)" data-charge="kidnap" data-fine="10000" data-jail="10" data-keywords="ลักพาตัว จับตัว ไม่ยินยอม">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🫴 ลักพาตัว</h4>
+                                        <p class="text-sm text-gray-600">การจับตัวผู้อื่นไปโดยไม่ยินยอม</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">10,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-yellow-50 hover:bg-yellow-100 p-3 rounded-lg cursor-pointer border border-yellow-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('outOfCity', 0, 0)" data-charge="outOfCity" data-fine="0" data-jail="0" data-special="X2 ของคดี" data-keywords="ออกนอกเมือง นอกเขต">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🌆 ออกนอกเมือง</h4>
+                                        <p class="text-sm text-gray-600">การออกนอกเขตเมืองโดยไม่ได้รับอนุญาต</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-purple-600 font-bold">X4 ของคดี</div>
+                                        <div class="text-orange-600">- นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-yellow-50 hover:bg-yellow-100 p-3 rounded-lg cursor-pointer border border-yellow-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('conspiracy', 0, 0)" data-charge="conspiracy" data-fine="0" data-jail="0" data-special="ตามคดีหลัก" data-keywords="สมรู้ร่วมคิด ร่วมกัน ร่วมมือ">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🤝 สมรู้ร่วมคิด/ร่วมกันกระทำความผิด</h4>
+                                        <p class="text-sm text-gray-600">การร่วมมือกันกระทำความผิด</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-purple-600 font-bold">ตามคดีหลัก</div>
+                                        <div class="text-orange-600">- นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('showWeapon', 5000, 0)" data-charge="showWeapon" data-fine="5000" data-jail="0" data-keywords="แสดงอาวุธ อาวุธ สาธารณะ">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🔫 แสดงอาวุธในที่สาธารณะ</h4>
+                                        <p class="text-sm text-gray-600">การแสดงอาวุธในที่สาธารณะ</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-blue-600 font-bold">5,000 XC</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('riskArea', 2000, 3)" data-charge="riskArea" data-fine="2000" data-jail="3" data-keywords="พื้นที่ สุ่มเสี่ยง เสี่ยงอันตราย">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">⚠️ พื้นที่สุ่มเสี่ยง</h4>
+                                        <p class="text-sm text-gray-600">การเข้าไปในพื้นที่เสี่ยงอันตราย</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">2,000 XC</div>
+                                        <div class="text-orange-600">3 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('escapeArrest', 3000, 5)" data-charge="escapeArrest" data-fine="3000" data-jail="5" data-keywords="หลบหนี จับกุม หนีตำรวจ">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🏃‍♂️ หลบหนีการจับกุม</h4>
+                                        <p class="text-sm text-gray-600">การหลบหนีจากเจ้าหน้าที่</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">3,000 XC</div>
+                                        <div class="text-orange-600">5 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('distribute', 8000, 5)" data-charge="distribute" data-fine="8000" data-jail="5" data-keywords="ยัดเยียด แจกจ่าย สิ่งของผิดกฎหมาย">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">📦 ยัดเยียดสิ่งของผิดกฎหมายให้ผู้อื่น</h4>
+                                        <p class="text-sm text-gray-600">การแจกจ่ายสิ่งของผิดกฎหมาย</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">8,000 XC</div>
+                                        <div class="text-orange-600">5 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('vehicleTheft', 10000, 10)" data-charge="vehicleTheft" data-fine="10000" data-jail="10" data-keywords="โจรกรรม ยานพาหนะ ขโมยรถ มอเตอร์ไซค์">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🚗 โจรกรรมยานพาหนะ</h4>
+                                        <p class="text-sm text-gray-600">การขโมยรถยนต์หรือมอเตอร์ไซค์</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">10,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('embezzlement', 15000, 20)" data-charge="embezzlement" data-fine="15000" data-jail="20" data-keywords="ยักยอก ทรัพย์สิน เงิน">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">💰 ยักยอกทรัพย์</h4>
+                                        <p class="text-sm text-gray-600">การยักยอกทรัพย์สินของผู้อื่น</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">15,000 XC</div>
+                                        <div class="text-orange-600">20 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('vandalism', 5000, 5)" data-charge="vandalism" data-fine="5000" data-jail="5" data-keywords="ทำลาย ทรัพย์สิน ผู้อื่น">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🔨 ทำลายทรัพย์สินผู้อื่น</h4>
+                                        <p class="text-sm text-gray-600">การทำลายทรัพย์สินของผู้อื่น</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">5,000 XC</div>
+                                        <div class="text-orange-600">5 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('trespassing', 50000, 15)" data-charge="trespassing" data-fine="50000" data-jail="15" data-keywords="บุกรุก เคหะสถาน บ้าน ที่อยู่อาศัย">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🏠 บุกรุกเคหะสถาน / บุกรุกบ้าน</h4>
+                                        <p class="text-sm text-gray-600">การบุกรุกเข้าไปในที่อยู่อาศัยของผู้อื่น</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">50,000 XC</div>
+                                        <div class="text-orange-600">15 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg cursor-pointer border transition-all enhanced-btn" 
+                                 onclick="toggleCharge('showIllegal', 5000, 8)" data-charge="showIllegal" data-fine="5000" data-jail="8" data-keywords="โชว์ ของงานดำ เจ้าหน้าที่ แสดง ผิดกฎหมาย">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">👁️ โชว์ของงานดำต่อหน้าเจ้าหน้าที่</h4>
+                                        <p class="text-sm text-gray-600">การแสดงสิ่งของผิดกฎหมายต่อหน้าเจ้าหน้าที่</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">5,000 XC</div>
+                                        <div class="text-orange-600">8 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-yellow-50 hover:bg-yellow-100 p-3 rounded-lg cursor-pointer border border-yellow-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('darkCar', 0, 0)" data-charge="darkCar" data-fine="0" data-jail="0" data-special="X4 ของคดี(ค่าปรับ)" data-keywords="รถทึบ งานดำ กระจกทึบ">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🚗 นำรถทึบมาทำงานดำ</h4>
+                                        <p class="text-sm text-gray-600">การใช้รถที่มีกระจกทึบในการกระทำผิด</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-purple-600 font-bold">X4 ของคดี</div>
+                                        <div class="text-orange-600">- นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-yellow-50 hover:bg-yellow-100 p-3 rounded-lg cursor-pointer border border-yellow-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('mountain', 0, 0)" data-charge="mountain" data-fine="0" data-jail="0" data-special="X2 ของคดี(ค่าปรับ)" data-keywords="ขึ้นเขา เขา ภูเขา">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">⛰️ ขึ้นเขา</h4>
+                                        <p class="text-sm text-gray-600">การขึ้นไปบนเขาโดยไม่ได้รับอนุญาต</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-purple-600 font-bold">X4 ของคดี</div>
+                                        <div class="text-orange-600">- นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Illegal Items -->
+                        <div class="category-content hidden" data-category="illegal">
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg border transition-all enhanced-btn" 
+                                 data-charge="cement" data-fine="2000" data-jail="3" data-keywords="ปูน ครอบครอง">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🧱 ครอบครองปูน</h4>
+                                        <p class="text-sm text-gray-600">มีปูนในครอบครองโดยผิดกฎหมาย</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">2,000 XC/ชิ้น</div>
+                                        <div class="text-orange-600">3 นาที/ชิ้น</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <label class="text-sm text-gray-700">จำนวน:</label>
+                                    <input type="number" min="1" value="1" class="quantity-input w-16 px-2 py-1 border border-gray-300 rounded text-sm" data-charge="cement">
+                                    <button onclick="handleIllegalChargeButton('cement')" class="enhanced-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">เพิ่ม</button>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg border transition-all enhanced-btn" 
+                                 data-charge="wire" data-fine="2000" data-jail="3" data-keywords="สายไฟ ครอบครอง">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">⚡ ครอบครองสายไฟ</h4>
+                                        <p class="text-sm text-gray-600">มีสายไฟในครอบครองโดยผิดกฎหมาย</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">2,000 XC/ชิ้น</div>
+                                        <div class="text-orange-600">3 นาที/ชิ้น</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <label class="text-sm text-gray-700">จำนวน:</label>
+                                    <input type="number" min="1" value="1" class="quantity-input w-16 px-2 py-1 border border-gray-300 rounded text-sm" data-charge="wire">
+                                    <button onclick="handleIllegalChargeButton('wire')" class="enhanced-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">เพิ่ม</button>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg border transition-all enhanced-btn" 
+                                 data-charge="illegalMoney" data-fine="0" data-jail="5" data-special="เงินแดง X2" data-keywords="เงินแดง เงินผิดกฎหมาย ครอบครอง">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">💰 ครอบครองเงินผิดกฎหมาย</h4>
+                                        <p class="text-sm text-gray-600">มีเงินที่ได้มาโดยผิดกฎหมาย</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-purple-600 font-bold">เงินแดง X2</div>
+                                        <div class="text-orange-600">5 นาที</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <label class="text-sm text-gray-700">จำนวนเงินแดง:</label>
+                                    <input type="number" min="1" value="1" class="quantity-input w-20 px-2 py-1 border border-gray-300 rounded text-sm" data-charge="illegalMoney">
+                                    <button onclick="handleIllegalChargeButton('illegalMoney')" class="enhanced-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">เพิ่ม</button>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg border transition-all enhanced-btn" 
+                                 data-charge="capsules" data-fine="3000" data-jail="5" data-keywords="capsule blue red green ครอบครอง">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">💊 ครอบครอง Capsule Blue, Red, Green</h4>
+                                        <p class="text-sm text-gray-600">มี Capsule ในครอบครองโดยผิดกฎหมาย</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">3,000 XC/ชิ้น</div>
+                                        <div class="text-orange-600">5 นาที/ชิ้น</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <label class="text-sm text-gray-700">จำนวน:</label>
+                                    <input type="number" min="1" value="1" class="quantity-input w-16 px-2 py-1 border border-gray-300 rounded text-sm" data-charge="capsules">
+                                    <button onclick="handleIllegalChargeButton('capsules')" class="enhanced-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">เพิ่ม</button>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-gray-50 hover:bg-blue-50 p-3 rounded-lg border transition-all enhanced-btn" 
+                                 data-charge="lockpick" data-fine="5000" data-jail="10" data-keywords="lockpick งัดแงะ อุปกรณ์ ครอบครอง">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">🔓 ครอบครอง Lockpick</h4>
+                                        <p class="text-sm text-gray-600">มีอุปกรณ์งัดแงะในครอบครอง</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">5,000 XC/ชิ้น</div>
+                                        <div class="text-orange-600">10 นาที/ชิ้น</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <label class="text-sm text-gray-700">จำนวน:</label>
+                                    <input type="number" min="1" value="1" class="quantity-input w-16 px-2 py-1 border border-gray-300 rounded text-sm" data-charge="lockpick">
+                                    <button onclick="handleIllegalChargeButton('lockpick')" class="enhanced-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">เพิ่ม</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!-- Serious Crimes -->
+                        <div class="category-content hidden" data-category="serious">
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('noCooperation', 30000, 10)" data-charge="noCooperation" data-fine="30000" data-jail="10" data-keywords="ไม่ให้ความร่วมมือ เจ้าหน้าที่ ไม่ร่วมมือ">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">🚫 ไม่ให้ความร่วมมือกับเจ้าหน้าที่</h4>
+                                        <p class="text-sm text-red-600">ไม่ให้ความร่วมมือในการสืบสวน</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">30,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('stealGovCar', 70000, 20)" data-charge="stealGovCar" data-fine="70000" data-jail="20" data-keywords="ขโมยรถ เจ้าหน้าที่ รถราชการ">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">🚔 พยายามขโมยรถเจ้าหน้าที่</h4>
+                                        <p class="text-sm text-red-600">พยายามขโมยรถของเจ้าหน้าที่</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">70,000 XC</div>
+                                        <div class="text-orange-600">20 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('disturbOfficer', 120000, 10)" data-charge="disturbOfficer" data-fine="120000" data-jail="10" data-keywords="ก่อกวน เจ้าหน้าที่ ขัดขวาง">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">⚠️ ก่อกวนเจ้าหน้าที่</h4>
+                                        <p class="text-sm text-red-600">การก่อกวนขัดขวางการปฏิบัติหน้าที่</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">120,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('disturbGovArea', 80000, 10)" data-charge="disturbGovArea" data-fine="80000" data-jail="10" data-keywords="ก่อเหตุ สถานที่ราชการ หน่วยงาน">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">🏛️ ก่อเหตุบริเวณสถานที่ราชการ</h4>
+                                        <p class="text-sm text-red-600">การก่อเหตุในบริเวณหน่วยงานราชการ</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">80,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('impersonateOfficer', 80000, 15)" data-charge="impersonateOfficer" data-fine="80000" data-jail="15" data-keywords="แอบอ้าง เป็นหน่วยงาน แต่งกาย ปลอมแปลง เจ้าหน้าที่">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">👮‍♂️ แอบอ้างเป็นหน่วยงานหรือแต่งกายเป็นหน่วยงาน</h4>
+                                        <p class="text-sm text-red-600">การปลอมแปลงตัวเป็นเจ้าหน้าที่</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">80,000 XC</div>
+                                        <div class="text-orange-600">15 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('falseReport', 20000, 10)" data-charge="falseReport" data-fine="20000" data-jail="10" data-keywords="แจ้งความเท็จ ให้การเท็จ ข้อมูลเท็จ">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">📝 แจ้งความเท็จ หรือให้การเท็จ</h4>
+                                        <p class="text-sm text-red-600">การให้ข้อมูลเท็จต่อเจ้าหน้าที่</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">20,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('assaultOfficer', 100000, 30)" data-charge="assaultOfficer" data-fine="100000" data-jail="30" data-keywords="ทำร้าย ร่างกาย เจ้าหน้าที่ รัฐ">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">👊 ทำร้ายร่างกายเจ้าหน้าที่</h4>
+                                        <p class="text-sm text-red-600">การทำร้ายร่างกายเจ้าหน้าที่รัฐ</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">100,000 XC</div>
+                                        <div class="text-orange-600">30 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('intentAssaultOfficer', 20000, 10)" data-charge="intentAssaultOfficer" data-fine="20000" data-jail="10" data-keywords="เจตนา ทำร้าย ร่างกาย">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">⚡ เจตนาทำร้ายร่างกาย</h4>
+                                        <p class="text-sm text-red-600">การทำร้ายร่างกายโดยเจตนา</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">20,000 XC</div>
+                                        <div class="text-orange-600">10 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="charge-item bg-red-50 hover:bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 transition-all enhanced-btn" 
+                                 onclick="toggleCharge('embezzlementRed', 15000, 20)" data-charge="embezzlementRed" data-fine="15000" data-jail="20" data-keywords="ยักยอก ทรัพย์ เงิน">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-medium text-red-800">💰 ยักยอกทรัพย์</h4>
+                                        <p class="text-sm text-red-600">การยักยอกทรัพย์สินของผู้อื่น</p>
+                                    </div>
+                                    <div class="text-right text-sm">
+                                        <div class="text-red-600 font-bold">15,000 XC</div>
+                                        <div class="text-orange-600">20 นาที</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Results -->
+                <div class="bg-white rounded-xl shadow-2xl p-6 glow-effect">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        📊 ผลการคำนวณ
+                    </h2>
+
+                    <!-- Selected Charges -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3">ข้อหาที่เลือก:</h3>
+                        <div id="selectedCharges" class="space-y-2 min-h-[60px] bg-gray-50 rounded-lg p-4 max-h-40 overflow-y-auto">
+                            <p class="text-gray-500 italic">ยังไม่ได้เลือกข้อหา</p>
+                        </div>
+                    </div>
+
+                    <!-- Special Modifiers Alert -->
+                    <div id="specialAlert" class="hidden mb-4 bg-orange-100 border-l-4 border-orange-500 p-4 rounded">
+                        <p class="text-orange-700 font-medium">⚠️ มีข้อหาพิเศษที่ส่งผลต่อการคำนวณ</p>
+                    </div>
+
+                    <!-- Instruction when no calculation -->
+                    <div id="noCalculation" class="text-center py-8 text-gray-500">
+                        <div class="text-6xl mb-4 float-animation">🧮</div>
+                        <p class="text-lg font-medium">เลือกข้อหาแล้วกดคำนวณ</p>
+                        <p class="text-sm">เพื่อดูผลการคำนวณค่าปรับและเวลาจำคุก</p>
+                    </div>
+
+                    <!-- Calculation Results (Hidden initially) -->
+                    <div id="calculationResults" class="hidden">
+                        <!-- Summary -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-500 glow-effect">
+                                <h4 class="font-semibold text-red-700">ค่าปรับรวม</h4>
+                                <p id="totalFine" class="text-2xl font-bold text-red-600">0 XinCoin</p>
+                            </div>
+                            <div class="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-500 glow-effect">
+                                <h4 class="font-semibold text-orange-700">เวลาจำคุกรวม</h4>
+                                <p id="totalJail" class="text-2xl font-bold text-orange-600">0 นาที</p>
+                            </div>
+                        </div>
+
+                        <!-- Bail Calculation -->
+                        <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500 mb-6 glow-effect">
+                            <h4 class="font-semibold text-green-700 mb-2">การประกันตัว</h4>
+                            <p class="text-sm text-gray-600 mb-2">คำนวณจากเวลาจำคุก (นาที × 2,000 XinCoin)</p>
+                            <p id="bailAmount" class="text-2xl font-bold text-green-600">0 XinCoin</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-2">
+                        <button onclick="calculateCharges()" id="calculateBtn" class="enhanced-btn flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors text-sm shadow-lg hover:shadow-blue-500/50">
+                            📊 คำนวณ
+                        </button>
+                        <button onclick="clearAllCharges()" id="clearBtn" class="enhanced-btn bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors text-sm shadow-lg">
+                            🗑️ ล้าง
+                        </button>
+                    </div>
+                    
+                    <!-- Copy Button (shown after calculation) -->
+                    <div id="copyButtonContainer" class="hidden mt-3">
+                        <button onclick="copyCharges()" id="copyChargesBtn" class="enhanced-btn w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors text-sm shadow-lg hover:shadow-purple-500/50">
+                            📋 คัดลอกข้อหา
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Card -->
+            <div class="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg glow-effect">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <span class="text-2xl float-animation">💡</span>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700">
+                            <strong>หมายเหตุ:</strong> ค่าปรับกันตัว = เวลาจำคุก × 2,000 XinCoin/นาที
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Back Button -->
+            <div class="text-center mt-8">
+                <button onclick="showPage('homePage')" class="enhanced-btn bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-lg transition-colors backdrop-blur-md shadow-lg hover:shadow-white/20">
+                    ← กลับหน้าหลัก
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let selectedCharges = [];
+        
+        // System functions
+        function enterSystem() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('homePage').classList.remove('hidden');
+            
+            // เปิดเพลงเมื่อเข้าระบบ (ถ้ามี)
+            const audio = document.getElementById('backgroundMusic');
+            if (audio && audio.src) {
+                audio.play().catch(error => {
+                    console.log('ไม่สามารถเปิดเพลงได้:', error);
+                    // อาจเป็นเพราะ browser policy หรือไฟล์ไม่พบ
+                });
+            }
+        }
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.add('hidden');
+            });
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        function goToHomePage() {
+            showPage('homePage');
+        }
+
+        function openExternalLink(url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Music controls
+        function initializeMusicControls() {
+            const audio = document.getElementById('backgroundMusic');
+            const muteBtn = document.getElementById('muteBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumeDisplay = document.getElementById('volumeDisplay');
+            
+            if (!audio) return;
+            
+            // ลิสต์เพลงที่สามารถใช้ได้ (ลำดับความสำคัญ)
+            const musicSources = [
+                './XIN TOWN - SAWMENOW.mp3',  // ไฟล์ในโฟลเดอร์เดียวกัน
+                'XIN TOWN - SAWMENOW.mp3',    // ไฟล์ในโฟลเดอร์เดียวกัน (แบบไม่มี ./)
+                'assets/XIN TOWN - SAWMENOW.mp3', // ไฟล์ในโฟลเดอร์ assets
+                'music/XIN TOWN - SAWMENOW.mp3',  // ไฟล์ในโฟลเดอร์ music
+                'audio/XIN TOWN - SAWMENOW.mp3'   // ไฟล์ในโฟลเดอร์ audio
+            ];
+            
+            let currentSourceIndex = 0;
+            let musicLoaded = false;
+            
+            // ฟังก์ชันลองโหลดเพลงจากแหล่งต่างๆ
+            function tryLoadMusic() {
+                if (currentSourceIndex >= musicSources.length) {
+                    console.log('ไม่พบไฟล์เพลง - ระบบจะทำงานโดยไม่มีเพลงพื้นหลัง');
+                    // ซ่อนปุ่มควบคุมเพลงถ้าไม่มีเพลง
+                    const musicControls = muteBtn.closest('.flex');
+                    if (musicControls) {
+                        musicControls.style.opacity = '0.5';
+                        musicControls.title = 'ไม่พบไฟล์เพลง';
+                    }
+                    return;
+                }
+                
+                const source = musicSources[currentSourceIndex];
+                audio.src = source;
+                
+                // ลองโหลดเพลง
+                audio.load();
+                
+                // ตรวจสอบว่าโหลดได้หรือไม่
+                audio.addEventListener('canplaythrough', function() {
+                    if (!musicLoaded) {
+                        musicLoaded = true;
+                        console.log(`โหลดเพลงสำเร็จจาก: ${source}`);
+                        // แสดงปุ่มควบคุมเพลงปกติ
+                        const musicControls = muteBtn.closest('.flex');
+                        if (musicControls) {
+                            musicControls.style.opacity = '1';
+                            musicControls.title = 'ควบคุมเพลงพื้นหลัง';
+                        }
+                    }
+                }, { once: true });
+                
+                audio.addEventListener('error', function() {
+                    if (!musicLoaded) {
+                        console.log(`ไม่สามารถโหลดเพลงจาก: ${source}`);
+                        currentSourceIndex++;
+                        tryLoadMusic();
+                    }
+                }, { once: true });
+            }
+            
+            // เริ่มลองโหลดเพลง
+            tryLoadMusic();
+            
+            // Set initial volume
+            audio.volume = 0.2;
+            
+            // Mute/unmute button
+            muteBtn.addEventListener('click', function() {
+                if (!musicLoaded) {
+                    alert('ไม่พบไฟล์เพลง กรุณาตรวจสอบว่าได้อัพโหลดไฟล์ "XIN TOWN - SAWMENOW.mp3" แล้ว');
+                    return;
+                }
+                
+                if (audio.muted) {
+                    audio.muted = false;
+                    this.textContent = '🔊';
+                } else {
+                    audio.muted = true;
+                    this.textContent = '🔇';
+                }
+            });
+            
+            // Volume slider
+            volumeSlider.addEventListener('input', function() {
+                if (!musicLoaded) return;
+                
+                const volume = this.value / 100;
+                audio.volume = volume;
+                volumeDisplay.textContent = this.value + '%';
+                
+                if (volume === 0) {
+                    muteBtn.textContent = '🔇';
+                } else {
+                    muteBtn.textContent = '🔊';
+                }
+            });
+        }
+        
+        // Charge database with names and descriptions
+        const chargeDatabase = {
+            // ค่าปรับปกติ
+            fight: { name: 'ทะเลาะวิวาท', desc: 'การทะเลาะวิวาทในที่สาธารณะ', fine: 10000, jail: 10 },
+            disturbance: { name: 'สร้างความวุ่นวาย ทุกรูปแบบ', desc: 'การกระทำที่ก่อให้เกิดความวุ่นวายในสังคม', fine: 5000, jail: 5 },
+            mask: { name: 'ใส่หน้ากาก หรือปิดบังใบหน้า', desc: 'การปิดบังใบหน้าในที่สาธารณะ', fine: 3000, jail: 5 },
+            assault: { name: 'เจตนาทำร้ายร่างกาย - ประชาชน', desc: 'การทำร้ายร่างกายผู้อื่นโดยเจตนา', fine: 20000, jail: 10 },
+            kidnap: { name: 'ลักพาตัว', desc: 'การจับตัวผู้อื่นไปโดยไม่ยินยอม', fine: 10000, jail: 10 },
+            outOfCity: { name: 'ออกนอกเมือง', desc: 'การออกนอกเขตเมืองโดยไม่ได้รับอนุญาต', fine: 0, jail: 0, special: 'X4 ของคดี' },
+            conspiracy: { name: 'สมรู้ร่วมคิด/ร่วมกันกระทำความผิด', desc: 'การร่วมมือกันกระทำความผิด', fine: 0, jail: 0, special: 'ตามคดีหลัก' },
+            showWeapon: { name: 'แสดงอาวุธในที่สาธารณะ', desc: 'การแสดงอาวุธในที่สาธารณะ', fine: 5000, jail: 0 },
+            riskArea: { name: 'พื้นที่สุ่มเสี่ยง', desc: 'การเข้าไปในพื้นที่เสี่ยงอันตราย', fine: 2000, jail: 3 },
+            escapeArrest: { name: 'หลบหนีการจับกุม', desc: 'การหลบหนีจากเจ้าหน้าที่', fine: 3000, jail: 5 },
+            distribute: { name: 'ยัดเยียดสิ่งของผิดกฎหมายให้ผู้อื่น', desc: 'การแจกจ่ายสิ่งของผิดกฎหมาย', fine: 8000, jail: 5 },
+            vehicleTheft: { name: 'โจรกรรมยานพาหนะ', desc: 'การขโมยรถยนต์หรือมอเตอร์ไซค์', fine: 10000, jail: 10 },
+            embezzlement: { name: 'ยักยอกทรัพย์', desc: 'การยักยอกทรัพย์สินของผู้อื่น', fine: 15000, jail: 20 },
+            vandalism: { name: 'ทำลายทรัพย์สินผู้อื่น', desc: 'การทำลายทรัพย์สินของผู้อื่น', fine: 5000, jail: 5 },
+            trespassing: { name: 'บุกรุกเคหะสถาน / บุกรุกบ้าน', desc: 'การบุกรุกเข้าไปในที่อยู่อาศัยของผู้อื่น', fine: 50000, jail: 15 },
+            showIllegal: { name: 'โชว์ของงานดำต่อหน้าเจ้าหน้าที่', desc: 'การแสดงสิ่งของผิดกฎหมายต่อหน้าเจ้าหน้าที่', fine: 5000, jail: 8 },
+            darkCar: { name: 'นำรถทึบมาทำงานดำ', desc: 'การใช้รถที่มีกระจกทึบในการกระทำผิด', fine: 0, jail: 0, special: 'X4 ของคดี(ค่าปรับ)' },
+            mountain: { name: 'ขึ้นเขา', desc: 'การขึ้นไปบนเขาโดยไม่ได้รับอนุญาต', fine: 0, jail: 0, special: 'X4 ของคดี(ค่าปรับ)' },
+            
+            // ของผิดกฎหมาย
+            cement: { name: 'ครอบครองปูน', desc: 'มีปูนในครอบครองโดยผิดกฎหมาย', fine: 2000, jail: 3, quantity: true },
+            wire: { name: 'ครอบครองสายไฟ', desc: 'มีสายไฟในครอบครองโดยผิดกฎหมาย', fine: 2000, jail: 3, quantity: true },
+            illegalMoney: { name: 'ครอบครองเงินผิดกฎหมาย', desc: 'มีเงินที่ได้มาโดยผิดกฎหมาย', fine: 0, jail: 5, special: 'เงินแดง X2', quantity: true },
+            capsules: { name: 'ครอบครอง Capsule Blue, Red, Green', desc: 'มี Capsule ในครอบครองโดยผิดกฎหมาย', fine: 3000, jail: 5, quantity: true },
+            lockpick: { name: 'ครอบครอง Lockpick', desc: 'มีอุปกรณ์งัดแงะในครอบครอง', fine: 5000, jail: 10, quantity: true },
+            
+            // คดีแดง
+            noCooperation: { name: 'ไม่ให้ความร่วมมือกับเจ้าหน้าที่', desc: 'ไม่ให้ความร่วมมือในการสืบสวน', fine: 30000, jail: 10 },
+            stealGovCar: { name: 'พยายามขโมยรถเจ้าหน้าที่', desc: 'พยายามขโมยรถของเจ้าหน้าที่', fine: 70000, jail: 20 },
+            disturbOfficer: { name: 'ก่อกวนเจ้าหน้าที่', desc: 'การก่อกวนขัดขวางการปฏิบัติหน้าที่', fine: 120000, jail: 10 },
+            disturbGovArea: { name: 'ก่อเหตุบริเวณสถานที่ราชการ', desc: 'การก่อเหตุในบริเวณหน่วยงานราชการ', fine: 80000, jail: 10 },
+            impersonateOfficer: { name: 'แอบอ้างเป็นหน่วยงานหรือแต่งกายเป็นหน่วยงาน', desc: 'การปลอมแปลงตัวเป็นเจ้าหน้าที่', fine: 80000, jail: 15 },
+            falseReport: { name: 'แจ้งความเท็จ หรือให้การเท็จ', desc: 'การให้ข้อมูลเท็จต่อเจ้าหน้าที่', fine: 20000, jail: 10 },
+            assaultOfficer: { name: 'ทำร้ายร่างกายเจ้าหน้าที่', desc: 'การทำร้ายร่างกายเจ้าหน้าที่รัฐ', fine: 100000, jail: 30 },
+            intentAssaultOfficer: { name: 'เจตนาทำร้ายร่างกาย', desc: 'การทำร้ายร่างกายโดยเจตนา', fine: 20000, jail: 10 },
+            embezzlementRed: { name: 'ยักยอกทรัพย์', desc: 'การยักยอกทรัพย์สินของผู้อื่น', fine: 15000, jail: 20 }
+        };
+        
+        let totalFine = 0;
+        let totalJail = 0;
+        let isRealTimeMode = false; // Track if real-time calculation is active
+
+        // Helper functions for charge categorization
+        function isRedCaseCharge(chargeId) {
+            const redCaseCharges = [
+                'noCooperation', 'stealGovCar', 'disturbOfficer', 'murder', 'robbery', 
+                'carTheft', 'terrorism', 'disturbGovArea', 'impersonateOfficer', 
+                'falseReport', 'assaultOfficer', 'intentAssaultOfficer', 'embezzlementRed'
+            ];
+            return redCaseCharges.includes(chargeId.replace(/_\d+$/, ''));
+        }
+
+        function isMultiplierCharge(chargeId) {
+            const multiplierCharges = ['outOfCity', 'darkCar', 'mountain'];
+            return multiplierCharges.includes(chargeId.replace(/_\d+$/, ''));
+        }
+
+        // Add illegal charge with quantity input (toggle functionality)
+        function addIllegalCharge(chargeId) {
+            // Check if this charge already exists
+            const existingIndex = selectedCharges.findIndex(charge => charge.originalId === chargeId);
+            
+            if (existingIndex !== -1) {
+                // Remove existing charge
+                selectedCharges.splice(existingIndex, 1);
+                updateSelectedChargesDisplay();
+                updateTotalCalculation();
+                updateIllegalItemAppearance(chargeId, false);
+                return;
+            }
+
+            const quantityInput = document.querySelector(`input[data-charge="${chargeId}"]`);
+            const quantity = parseInt(quantityInput.value) || 1;
+            const chargeInfo = chargeDatabase[chargeId];
+            
+            // Create unique ID for this charge instance
+            const uniqueId = `${chargeId}_${Date.now()}`;
+            
+            const newCharge = {
+                id: uniqueId,
+                originalId: chargeId,
+                name: chargeInfo.name,
+                desc: chargeInfo.desc,
+                fine: chargeInfo.fine * quantity,
+                jail: chargeInfo.jail * quantity,
+                quantity: quantity,
+                originalFine: chargeInfo.fine,
+                originalJail: chargeInfo.jail,
+                special: chargeInfo.special
+            };
+            
+            selectedCharges.push(newCharge);
+            updateSelectedChargesDisplay();
+            updateTotalCalculation();
+            updateIllegalItemAppearance(chargeId, true);
+            
+            // Reset quantity input
+            quantityInput.value = 1;
+        }
+
+        // Handle illegal charge button click (add or remove)
+        function handleIllegalChargeButton(chargeId) {
+            const hasCharge = selectedCharges.some(charge => charge.originalId === chargeId);
+            
+            if (hasCharge) {
+                // Remove all instances of this charge type
+                selectedCharges = selectedCharges.filter(charge => charge.originalId !== chargeId);
+                updateSelectedChargesDisplay();
+                updateTotalCalculation();
+                updateIllegalItemAppearance(chargeId, false);
+            } else {
+                // Add new charge
+                addIllegalCharge(chargeId);
+            }
+        }
+
+        // Toggle charge selection
+        function toggleCharge(chargeId, fine, jail) {
+            const existingIndex = selectedCharges.findIndex(charge => charge.originalId === chargeId);
+            
+            if (existingIndex !== -1) {
+                // Remove charge
+                selectedCharges.splice(existingIndex, 1);
+            } else {
+                // Add charge
+                const chargeInfo = chargeDatabase[chargeId];
+                if (chargeInfo) {
+                    // For regular charges without quantity
+                    const newCharge = {
+                        id: chargeId,
+                        originalId: chargeId,
+                        name: chargeInfo.name,
+                        desc: chargeInfo.desc,
+                        fine: parseInt(fine),
+                        jail: parseInt(jail),
+                        quantity: 1,
+                        originalFine: parseInt(fine),
+                        originalJail: parseInt(jail),
+                        special: chargeInfo.special
+                    };
+                    selectedCharges.push(newCharge);
+                }
+            }
+            
+            updateSelectedChargesDisplay();
+            updateTotalCalculation();
+            updateChargeItemAppearance();
+        }
+
+        // Update charge item appearance to show selected state
+        function updateChargeItemAppearance() {
+            document.querySelectorAll('.charge-item').forEach(item => {
+                const chargeId = item.getAttribute('data-charge');
+                const isSelected = selectedCharges.find(charge => charge.originalId === chargeId || charge.id === chargeId);
+                
+                // Don't change appearance for illegal items since they have their own function
+                const isIllegalItem = ['cement', 'wire', 'illegalMoney', 'capsules', 'lockpick'].includes(chargeId);
+                if (isIllegalItem) {
+                    return;
+                }
+                
+                if (isSelected) {
+                    item.classList.add('bg-blue-100', 'border-blue-400');
+                    item.classList.remove('bg-gray-50', 'hover:bg-blue-50');
+                } else {
+                    item.classList.remove('bg-blue-100', 'border-blue-400');
+                    item.classList.add('bg-gray-50', 'hover:bg-blue-50');
+                }
+            });
+        }
+
+        // Update illegal item appearance to show selected state
+        function updateIllegalItemAppearance(chargeId, isSelected) {
+            const item = document.querySelector(`[data-charge="${chargeId}"]`);
+            const button = item.querySelector('button');
+            
+            if (isSelected) {
+                item.classList.add('bg-blue-100', 'border-blue-400');
+                item.classList.remove('bg-gray-50', 'hover:bg-blue-50');
+                button.textContent = 'ลบ';
+                button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                button.classList.add('bg-red-600', 'hover:bg-red-700');
+            } else {
+                item.classList.remove('bg-blue-100', 'border-blue-400');
+                item.classList.add('bg-gray-50', 'hover:bg-blue-50');
+                button.textContent = 'เพิ่ม';
+                button.classList.remove('bg-red-600', 'hover:bg-red-700');
+                button.classList.add('bg-blue-600', 'hover:bg-blue-700');
+            }
+        }
+
+        // Remove charge from selection
+        function removeCharge(chargeId) {
+            selectedCharges = selectedCharges.filter(charge => charge.id !== chargeId);
+            updateSelectedChargesDisplay();
+            updateTotalCalculation();
+            updateChargeItemAppearance();
+        }
+
+        // Update selected charges display
+        function updateSelectedChargesDisplay() {
+            const container = document.getElementById('selectedCharges');
+            const noCalculation = document.getElementById('noCalculation');
+            const calculationResults = document.getElementById('calculationResults');
+            const specialAlert = document.getElementById('specialAlert');
+            const copyButtonContainer = document.getElementById('copyButtonContainer');
+            
+            if (selectedCharges.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 italic">ยังไม่ได้เลือกข้อหา</p>`;
+                noCalculation.classList.remove('hidden');
+                calculationResults.classList.add('hidden');
+                specialAlert.classList.add('hidden');
+                copyButtonContainer.classList.add('hidden');
+                isRealTimeMode = false; // Reset real-time mode when no charges
+                return;
+            }
+            
+            // Check for special charges that affect calculation
+            const hasSpecialCharges = selectedCharges.some(charge => 
+                charge.special || isMultiplierCharge(charge.originalId)
+            );
+            
+            if (hasSpecialCharges) {
+                specialAlert.classList.remove('hidden');
+            } else {
+                specialAlert.classList.add('hidden');
+            }
+            
+            let html = '';
+            selectedCharges.forEach(charge => {
+                html += `
+                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border shadow-sm">
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-800">${charge.name}</h4>
+                            ${charge.quantity > 1 ? `<p class="text-sm text-gray-600">จำนวน: ${charge.quantity}</p>` : ''}
+                            ${charge.special ? `<p class="text-sm text-purple-600">${charge.special}</p>` : ''}
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="text-right text-sm">
+                                ${charge.special ? 
+                                    `<div class="text-purple-600 font-bold">${charge.special}</div>` :
+                                    `<div class="text-red-600 font-bold">${charge.fine.toLocaleString()} XC</div>`
+                                }
+                                <div class="text-orange-600">${charge.jail} นาที</div>
+                            </div>
+                            <button onclick="removeCharge('${charge.id}')" class="text-red-500 hover:text-red-700 ml-2">
+                                <span class="text-lg">✕</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Only auto-calculate if real-time mode is active
+            if (selectedCharges.length > 0 && isRealTimeMode) {
+                calculateAndDisplayResults();
+            }
+        }
+
+        // Update total calculation
+        function updateTotalCalculation() {
+            // Separate charges by category
+            const redCaseCharges = selectedCharges.filter(charge => isRedCaseCharge(charge.originalId));
+            const otherCharges = selectedCharges.filter(charge => !isRedCaseCharge(charge.originalId) && !isMultiplierCharge(charge.originalId));
+            const multiplierCharges = selectedCharges.filter(charge => isMultiplierCharge(charge.originalId));
+            
+            // Calculate base totals for non-red cases (excluding multiplier charges)
+            let baseFine = otherCharges.reduce((sum, charge) => {
+                if (!charge.special || charge.originalId === 'illegalMoney') {
+                    return sum + charge.fine;
+                }
+                return sum;
+            }, 0);
+            
+            let baseJail = otherCharges.reduce((sum, charge) => {
+                return sum + charge.jail;
+            }, 0);
+            
+            // Calculate red case totals (not affected by multipliers)
+            let redCaseFine = redCaseCharges.reduce((sum, charge) => sum + charge.fine, 0);
+            let redCaseJail = redCaseCharges.reduce((sum, charge) => sum + charge.jail, 0);
+            
+            // Check for multiplier charges
+            let hasOutOfCity = false;
+            let hasDarkCar = false;
+            let hasMountain = false;
+            
+            multiplierCharges.forEach(charge => {
+                if (charge.originalId === 'outOfCity') {
+                    hasOutOfCity = true;
+                } else if (charge.originalId === 'darkCar') {
+                    hasDarkCar = true;
+                } else if (charge.originalId === 'mountain') {
+                    hasMountain = true;
+                }
+            });
+            
+            // Calculate multiplier based on specific combinations
+            let multiplier = 1;
+            if (hasMountain && hasOutOfCity && hasDarkCar) {
+                multiplier = 10; // All three = 10x
+            } else if (hasMountain && hasOutOfCity) {
+                multiplier = 8;  // Mountain + Out of city = 8x
+            } else if (hasMountain && hasDarkCar) {
+                multiplier = 8;  // Mountain + Dark car = 8x
+            } else if (hasOutOfCity && hasDarkCar) {
+                multiplier = 6;  // Out of city + Dark car = 6x
+            } else if (hasMountain) {
+                multiplier = 4;  // Mountain only = 4x
+            } else if (hasOutOfCity) {
+                multiplier = 4;  // Out of city only = 4x
+            } else if (hasDarkCar) {
+                multiplier = 4;  // Dark car only = 4x
+            }
+            
+            // Apply multiplier only to base charges (not red cases)
+            const multipliedFine = baseFine * multiplier;
+            
+            // Handle special charges like illegal money
+            let specialFine = 0;
+            selectedCharges.forEach(charge => {
+                if (charge.originalId === 'illegalMoney') {
+                    specialFine += charge.quantity * 2; // X2 of illegal money amount
+                }
+            });
+            
+            // Calculate final totals
+            totalFine = multipliedFine + redCaseFine + specialFine;
+            totalJail = baseJail + redCaseJail;
+        }
+
+        // Auto-calculate and display results
+        function calculateAndDisplayResults() {
+            // Separate charges by type
+            let baseFine = 0;
+            let baseJail = 0;
+            let redCaseCharges = [];
+            
+            // Check for special modifiers
+            let hasMountain = false;
+            let hasOutOfCity = false;
+            let hasDarkCar = false;
+            
+            selectedCharges.forEach(charge => {
+                if (charge.originalId === 'mountain') {
+                    hasMountain = true;
+                } else if (charge.originalId === 'outOfCity') {
+                    hasOutOfCity = true;
+                } else if (charge.originalId === 'darkCar') {
+                    hasDarkCar = true;
+                } else if (isRedCaseCharge(charge.originalId)) {
+                    redCaseCharges.push(charge);
+                } else if (!charge.special) {
+                    baseFine += charge.fine;
+                    baseJail += charge.jail;
+                }
+            });
+            
+            // Calculate multiplier based on specific combinations
+            let multiplier = 1;
+            if (hasMountain && hasOutOfCity && hasDarkCar) {
+                multiplier = 10; // ขึ้นเขา + ออกนอกเมือง + รถทึบ = 10x
+            } else if (hasMountain && hasOutOfCity) {
+                multiplier = 8;  // ขึ้นเขา + ออกนอกเมือง = 8x
+            } else if (hasMountain && hasDarkCar) {
+                multiplier = 8;  // ขึ้นเขา + รถทึบ = 8x
+            } else if (hasOutOfCity && hasDarkCar) {
+                multiplier = 6;  // ออกนอกเมือง + รถทึบ = 6x
+            } else if (hasMountain) {
+                multiplier = 4;  // ขึ้นเขา = 4x
+            } else if (hasOutOfCity) {
+                multiplier = 2;  // ออกนอกเมือง = 2x
+            } else if (hasDarkCar) {
+                multiplier = 4;  // รถทึบ = 4x
+            }
+            
+            // Calculate final totals
+            const multipliedFine = baseFine * multiplier;
+            const redCaseFine = redCaseCharges.reduce((sum, charge) => sum + charge.fine, 0);
+            const redCaseJail = redCaseCharges.reduce((sum, charge) => sum + charge.jail, 0);
+            
+            let totalFine = multipliedFine + redCaseFine;
+            const totalJail = baseJail + redCaseJail;
+            
+            // Handle special charges
+            selectedCharges.forEach(charge => {
+                if (charge.originalId === 'illegalMoney') {
+                    totalFine += charge.quantity * 2; // X2 of illegal money amount
+                }
+            });
+            
+            // Calculate bail amount (jail time × 2,000)
+            const bailAmount = totalJail * 2000;
+            
+            // Update display elements
+            document.getElementById('totalFine').textContent = totalFine.toLocaleString() + ' XinCoin';
+            document.getElementById('totalJail').textContent = totalJail.toLocaleString() + ' นาที';
+            document.getElementById('bailAmount').textContent = bailAmount.toLocaleString() + ' XinCoin';
+            
+            // Show results
+            document.getElementById('noCalculation').classList.add('hidden');
+            document.getElementById('calculationResults').classList.remove('hidden');
+            document.getElementById('copyButtonContainer').classList.remove('hidden');
+        }
+
+        // Calculate charges with modifiers (manual button)
+        function calculateCharges() {
+            if (selectedCharges.length === 0) {
+                alert('กรุณาเลือกข้อหาก่อนคำนวณ');
+                return;
+            }
+            
+            // Enable real-time mode
+            isRealTimeMode = true;
+            calculateAndDisplayResults();
+        }
+
+        // Clear all charges
+        function clearAllCharges() {
+            // Reset all illegal item appearances
+            selectedCharges.forEach(charge => {
+                if (chargeDatabase[charge.originalId]?.quantity) {
+                    updateIllegalItemAppearance(charge.originalId, false);
+                }
+            });
+            
+            selectedCharges = [];
+            isRealTimeMode = false; // Disable real-time mode
+            updateSelectedChargesDisplay();
+            updateTotalCalculation();
+            updateChargeItemAppearance();
+            
+            // Hide results
+            document.getElementById('noCalculation').classList.remove('hidden');
+            document.getElementById('calculationResults').classList.add('hidden');
+            document.getElementById('copyButtonContainer').classList.add('hidden');
+        }
+
+        // Copy charges to clipboard
+        function copyCharges() {
+            if (selectedCharges.length === 0) {
+                alert('ไม่มีข้อหาให้คัดลอก');
+                return;
+            }
+            
+            // สร้างรายการข้อหาแบบเรียงกันไป
+            let chargeNames = [];
+            selectedCharges.forEach(charge => {
+                if (charge.quantity > 1) {
+                    chargeNames.push(`${charge.name} (${charge.quantity})`);
+                } else {
+                    chargeNames.push(charge.name);
+                }
+            });
+            
+            const copyText = chargeNames.join(', ');
+            
+            navigator.clipboard.writeText(copyText).then(() => {
+                // Show success feedback
+                const button = document.getElementById('copyChargesBtn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ คัดลอกแล้ว!';
+                button.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('bg-green-600');
+                }, 2000);
+            }).catch(() => {
+                alert('ไม่สามารถคัดลอกได้ กรุณาลองใหม่');
+            });
+        }
+
+        // Switch category
+        function switchCategory(category) {
+            // Update tab appearance
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            
+            // Show/hide content
+            document.querySelectorAll('.category-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.querySelector(`.category-content[data-category="${category}"]`).classList.remove('hidden');
+        }
+
+        // Helper functions for charge categorization
+        function isRedCaseCharge(chargeId) {
+            const redCaseCharges = [
+                'noCooperation', 'stealGovCar', 'disturbOfficer', 'disturbGovArea', 
+                'impersonateOfficer', 'falseReport', 'assaultOfficer', 
+                'intentAssaultOfficer', 'embezzlementRed'
+            ];
+            return redCaseCharges.includes(chargeId.replace(/_\d+$/, ''));
+        }
+
+        function isMultiplierCharge(chargeId) {
+            const multiplierCharges = ['outOfCity', 'darkCar', 'mountain'];
+            return multiplierCharges.includes(chargeId.replace(/_\d+$/, ''));
+        }
+
+
+
+        // Search functionality
+        function initializeSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearch');
+            const searchResults = document.getElementById('searchResults');
+            const searchCount = document.getElementById('searchCount');
+            
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                if (searchTerm === '') {
+                    // Clear search
+                    clearSearchBtn.classList.add('hidden');
+                    searchResults.classList.add('hidden');
+                    document.querySelectorAll('.charge-item').forEach(item => {
+                        item.style.display = 'block';
+                    });
+                    return;
+                }
+                
+                clearSearchBtn.classList.remove('hidden');
+                
+                let matchCount = 0;
+                document.querySelectorAll('.charge-item').forEach(item => {
+                    const keywords = item.getAttribute('data-keywords') || '';
+                    const chargeName = item.querySelector('h4').textContent.toLowerCase();
+                    const chargeDesc = item.querySelector('p').textContent.toLowerCase();
+                    
+                    const isMatch = keywords.toLowerCase().includes(searchTerm) ||
+                                   chargeName.includes(searchTerm) ||
+                                   chargeDesc.includes(searchTerm);
+                    
+                    if (isMatch) {
+                        item.style.display = 'block';
+                        matchCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                searchCount.textContent = matchCount;
+                searchResults.classList.remove('hidden');
+            });
+            
+            clearSearchBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+            });
+        }
+
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize music controls
+            initializeMusicControls();
+            
+            // Initialize search
+            initializeSearch();
+            
+            // Category tab switching
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    switchCategory(category);
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98762caf35be4f52',t:'MTc1OTI2MTA0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
