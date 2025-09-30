@@ -696,7 +696,7 @@
                                  data-charge="cement" data-fine="2000" data-jail="3" data-keywords="ปูน ครอบครอง">
                                 <div class="flex justify-between items-center mb-2">
                                     <div>
-                                        <h4 class="font-medium text-gray-800">🧱 ครอบครองปูน</h4>
+                                        <h4 class="font-medium text-gray-800">🏗️ ครอบครองปูน</h4>
                                         <p class="text-sm text-gray-600">มีปูนในครอบครองโดยผิดกฎหมาย</p>
                                     </div>
                                     <div class="text-right text-sm">
@@ -715,7 +715,7 @@
                                  data-charge="wire" data-fine="2000" data-jail="3" data-keywords="สายไฟ ครอบครอง">
                                 <div class="flex justify-between items-center mb-2">
                                     <div>
-                                        <h4 class="font-medium text-gray-800">⚡ ครอบครองสายไฟ</h4>
+                                        <h4 class="font-medium text-gray-800">🔌 ครอบครองสายไฟ</h4>
                                         <p class="text-sm text-gray-600">มีสายไฟในครอบครองโดยผิดกฎหมาย</p>
                                     </div>
                                     <div class="text-right text-sm">
@@ -734,7 +734,7 @@
                                  data-charge="illegalMoney" data-fine="0" data-jail="5" data-special="เงินแดง X2" data-keywords="เงินแดง เงินผิดกฎหมาย ครอบครอง">
                                 <div class="flex justify-between items-center mb-2">
                                     <div>
-                                        <h4 class="font-medium text-gray-800">💰 ครอบครองเงินผิดกฎหมาย</h4>
+                                        <h4 class="font-medium text-gray-800">💸 ครอบครองเงินผิดกฎหมาย</h4>
                                         <p class="text-sm text-gray-600">มีเงินที่ได้มาโดยผิดกฎหมาย</p>
                                     </div>
                                     <div class="text-right text-sm">
@@ -772,7 +772,7 @@
                                  data-charge="lockpick" data-fine="5000" data-jail="10" data-keywords="lockpick งัดแงะ อุปกรณ์ ครอบครอง">
                                 <div class="flex justify-between items-center mb-2">
                                     <div>
-                                        <h4 class="font-medium text-gray-800">🔓 ครอบครอง Lockpick</h4>
+                                        <h4 class="font-medium text-gray-800">🗝️ ครอบครอง Lockpick</h4>
                                         <p class="text-sm text-gray-600">มีอุปกรณ์งัดแงะในครอบครอง</p>
                                     </div>
                                     <div class="text-right text-sm">
@@ -1174,7 +1174,7 @@
             // ของผิดกฎหมาย
             cement: { name: 'ครอบครองปูน', desc: 'มีปูนในครอบครองโดยผิดกฎหมาย', fine: 2000, jail: 3, quantity: true },
             wire: { name: 'ครอบครองสายไฟ', desc: 'มีสายไฟในครอบครองโดยผิดกฎหมาย', fine: 2000, jail: 3, quantity: true },
-            illegalMoney: { name: 'ครอบครองเงินผิดกฎหมาย', desc: 'มีเงินที่ได้มาโดยผิดกฎหมาย', fine: 0, jail: 5, special: 'เงินแดง X2', quantity: true },
+            illegalMoney: { name: 'ครอบครองเงินผิดกฎหมาย', desc: 'มีเงินที่ได้มาโดยผิดกฎหมาย', fine: 0, jail: 5, special: 'เงินแดง X2', quantity: true, fixedJail: true },
             capsules: { name: 'ครอบครอง Capsule Blue, Red, Green', desc: 'มี Capsule ในครอบครองโดยผิดกฎหมาย', fine: 3000, jail: 5, quantity: true },
             lockpick: { name: 'ครอบครอง Lockpick', desc: 'มีอุปกรณ์งัดแงะในครอบครอง', fine: 5000, jail: 10, quantity: true },
             
@@ -1236,7 +1236,7 @@
                 name: chargeInfo.name,
                 desc: chargeInfo.desc,
                 fine: chargeInfo.fine * quantity,
-                jail: chargeInfo.jail * quantity,
+                jail: chargeId === 'illegalMoney' ? 5 : chargeInfo.jail * quantity, // เงินแดงจำคุกคงที่ 5 นาที
                 quantity: quantity,
                 originalFine: chargeInfo.fine,
                 originalJail: chargeInfo.jail,
@@ -1391,7 +1391,9 @@
                         </div>
                         <div class="flex items-center space-x-2">
                             <div class="text-right text-sm">
-                                ${charge.special ? 
+                                ${charge.special && charge.originalId === 'illegalMoney' ? 
+                                    `<div class="text-purple-600 font-bold">${charge.quantity * 2} XC (${charge.special})</div>` :
+                                    charge.special ? 
                                     `<div class="text-purple-600 font-bold">${charge.special}</div>` :
                                     `<div class="text-red-600 font-bold">${charge.fine.toLocaleString()} XC</div>`
                                 }
@@ -1506,6 +1508,9 @@
                     hasDarkCar = true;
                 } else if (isRedCaseCharge(charge.originalId)) {
                     redCaseCharges.push(charge);
+                } else if (charge.originalId === 'illegalMoney') {
+                    // เงินแดงมีเวลาจำคุกคงที่ 5 นาที
+                    baseJail += charge.jail;
                 } else if (!charge.special) {
                     baseFine += charge.fine;
                     baseJail += charge.jail;
@@ -1728,5 +1733,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98762caf35be4f52',t:'MTc1OTI2MTA0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987676d044094f52',t:'MTc1OTI2NDA4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
