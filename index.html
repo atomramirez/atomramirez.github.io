@@ -216,7 +216,7 @@
 
     <!-- Background Music -->
     <audio id="backgroundMusic" loop hidden>
-        <source src="/XIN TOWN - SAWMENOW.mp3" type="audio/mpeg">
+        <!-- เพลงจะถูกโหลดผ่าน JavaScript แทน -->
     </audio>
 
     <!-- Navigation -->
@@ -1021,11 +1021,12 @@
             document.getElementById('welcomeScreen').classList.add('hidden');
             document.getElementById('homePage').classList.remove('hidden');
             
-            // เปิดเพลงเมื่อเข้าระบบ
+            // เปิดเพลงเมื่อเข้าระบบ (ถ้ามี)
             const audio = document.getElementById('backgroundMusic');
-            if (audio) {
+            if (audio && audio.src) {
                 audio.play().catch(error => {
                     console.log('ไม่สามารถเปิดเพลงได้:', error);
+                    // อาจเป็นเพราะ browser policy หรือไฟล์ไม่พบ
                 });
             }
         }
@@ -1056,11 +1057,73 @@
             
             if (!audio) return;
             
+            // ลิสต์เพลงที่สามารถใช้ได้ (ลำดับความสำคัญ)
+            const musicSources = [
+                './XIN TOWN - SAWMENOW.mp3',  // ไฟล์ในโฟลเดอร์เดียวกัน
+                'XIN TOWN - SAWMENOW.mp3',    // ไฟล์ในโฟลเดอร์เดียวกัน (แบบไม่มี ./)
+                'assets/XIN TOWN - SAWMENOW.mp3', // ไฟล์ในโฟลเดอร์ assets
+                'music/XIN TOWN - SAWMENOW.mp3',  // ไฟล์ในโฟลเดอร์ music
+                'audio/XIN TOWN - SAWMENOW.mp3'   // ไฟล์ในโฟลเดอร์ audio
+            ];
+            
+            let currentSourceIndex = 0;
+            let musicLoaded = false;
+            
+            // ฟังก์ชันลองโหลดเพลงจากแหล่งต่างๆ
+            function tryLoadMusic() {
+                if (currentSourceIndex >= musicSources.length) {
+                    console.log('ไม่พบไฟล์เพลง - ระบบจะทำงานโดยไม่มีเพลงพื้นหลัง');
+                    // ซ่อนปุ่มควบคุมเพลงถ้าไม่มีเพลง
+                    const musicControls = muteBtn.closest('.flex');
+                    if (musicControls) {
+                        musicControls.style.opacity = '0.5';
+                        musicControls.title = 'ไม่พบไฟล์เพลง';
+                    }
+                    return;
+                }
+                
+                const source = musicSources[currentSourceIndex];
+                audio.src = source;
+                
+                // ลองโหลดเพลง
+                audio.load();
+                
+                // ตรวจสอบว่าโหลดได้หรือไม่
+                audio.addEventListener('canplaythrough', function() {
+                    if (!musicLoaded) {
+                        musicLoaded = true;
+                        console.log(`โหลดเพลงสำเร็จจาก: ${source}`);
+                        // แสดงปุ่มควบคุมเพลงปกติ
+                        const musicControls = muteBtn.closest('.flex');
+                        if (musicControls) {
+                            musicControls.style.opacity = '1';
+                            musicControls.title = 'ควบคุมเพลงพื้นหลัง';
+                        }
+                    }
+                }, { once: true });
+                
+                audio.addEventListener('error', function() {
+                    if (!musicLoaded) {
+                        console.log(`ไม่สามารถโหลดเพลงจาก: ${source}`);
+                        currentSourceIndex++;
+                        tryLoadMusic();
+                    }
+                }, { once: true });
+            }
+            
+            // เริ่มลองโหลดเพลง
+            tryLoadMusic();
+            
             // Set initial volume
             audio.volume = 0.2;
             
             // Mute/unmute button
             muteBtn.addEventListener('click', function() {
+                if (!musicLoaded) {
+                    alert('ไม่พบไฟล์เพลง กรุณาตรวจสอบว่าได้อัพโหลดไฟล์ "XIN TOWN - SAWMENOW.mp3" แล้ว');
+                    return;
+                }
+                
                 if (audio.muted) {
                     audio.muted = false;
                     this.textContent = '🔊';
@@ -1072,6 +1135,8 @@
             
             // Volume slider
             volumeSlider.addEventListener('input', function() {
+                if (!musicLoaded) return;
+                
                 const volume = this.value / 100;
                 audio.volume = volume;
                 volumeDisplay.textContent = this.value + '%';
@@ -1081,11 +1146,6 @@
                 } else {
                     muteBtn.textContent = '🔊';
                 }
-            });
-            
-            // Try to play audio (will be blocked by browser policy until user interaction)
-            audio.play().catch(() => {
-                // Audio autoplay blocked, which is expected
             });
         }
         
@@ -1683,5 +1743,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987608cb36184f52',t:'MTc1OTI1OTU3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98761a81c5324f52',t:'MTc1OTI2MDI5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
