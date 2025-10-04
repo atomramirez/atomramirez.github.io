@@ -152,6 +152,22 @@
         .category-content.hidden {
             display: none;
         }
+        
+        /* Music Tab Styles */
+        .music-tab {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .music-tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+        .tab-content {
+            display: block;
+        }
+        .tab-content.hidden {
+            display: none;
+        }
         .page-content {
             display: block;
         }
@@ -160,21 +176,39 @@
         }
         .slider::-webkit-slider-thumb {
             appearance: none;
-            height: 16px;
-            width: 16px;
+            height: 20px;
+            width: 20px;
             border-radius: 50%;
-            background: #ffffff;
+            background: linear-gradient(135deg, #ffffff, #f3f4f6);
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.9);
+            transition: all 0.2s ease;
+        }
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5), 0 3px 8px rgba(0,0,0,0.4);
+            border: 3px solid #ffffff;
         }
         .slider::-moz-range-thumb {
-            height: 16px;
-            width: 16px;
+            height: 20px;
+            width: 20px;
             border-radius: 50%;
-            background: #ffffff;
+            background: linear-gradient(135deg, #ffffff, #f3f4f6);
             cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 3px solid rgba(255,255,255,0.9);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .slider {
+            background: linear-gradient(to right, rgba(255,255,255,0.7), rgba(255,255,255,0.4));
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .slider:hover {
+            background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 2px 8px rgba(255,255,255,0.3);
         }
         
         /* Force 24-hour format for time inputs */
@@ -248,13 +282,8 @@
         </div>
     </div>
 
-    <!-- Background Music -->
-    <audio id="backgroundMusic" loop hidden>
-        <!-- เพลงจะถูกโหลดผ่าน JavaScript แทน -->
-    </audio>
-
-    <!-- Navigation -->
-    <nav id="mainNavigation" class="bg-white/10 backdrop-blur-md border-b border-white/20 shadow-lg shadow-blue-500/20 glow-effect relative z-10 hidden">
+    <!-- Navigation Bar -->
+    <nav id="navbar" class="bg-white/10 backdrop-blur-md border-b border-white/20 shadow-lg shadow-blue-500/20 glow-effect relative z-10 transition-transform duration-300">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold text-white flex items-center float-animation">
@@ -262,13 +291,37 @@
                 </h1>
                 <div class="flex items-center space-x-4">
                     <!-- Music Controls -->
-                    <div class="flex items-center space-x-2 bg-white/10 rounded-lg px-3 py-2 glow-effect">
-                        <button id="muteBtn" class="text-white hover:text-blue-200 transition-colors" title="เปิด/ปิดเสียง">
+                    <div class="flex items-center space-x-1 bg-white/15 backdrop-blur-md rounded-lg px-2 py-1 border border-white/20 shadow-lg">
+                        <!-- Previous Song -->
+                        <button id="prevBtnNav" class="text-white hover:text-blue-200 transition-all duration-300 text-sm hover:scale-110" title="เพลงก่อนหน้า">
+                            ⏮️
+                        </button>
+                        <!-- Play/Pause -->
+                        <button id="playPauseBtnNav" class="text-white hover:text-blue-200 transition-all duration-300 text-sm hover:scale-110" title="เล่น/หยุด">
+                            ▶️
+                        </button>
+                        <!-- Next Song -->
+                        <button id="nextBtnNav" class="text-white hover:text-blue-200 transition-all duration-300 text-sm hover:scale-110" title="เพลงถัดไป">
+                            ⏭️
+                        </button>
+                        <div class="w-px h-3 bg-white/30"></div>
+                        <button id="autoplayBtn" class="text-white hover:text-blue-200 transition-all duration-300 text-sm hover:scale-110 bg-green-600/30 px-1 py-0.5 rounded" title="เล่นอัตโนมัติ">
+                            🔄
+                        </button>
+                        <button id="loopBtn" class="text-white hover:text-blue-200 transition-all duration-300 text-sm hover:scale-110 bg-blue-600/30 px-1 py-0.5 rounded" title="วนซ้ำ">
+                            🔁
+                        </button>
+                        <div class="w-px h-3 bg-white/30"></div>
+                        <button id="muteBtn" class="text-white hover:text-blue-200 transition-all duration-300 text-sm hover:scale-110" title="เปิด/ปิดเสียง">
                             🔊
                         </button>
-                        <input type="range" id="volumeSlider" min="0" max="100" value="20" 
-                               class="w-20 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider">
-                        <span id="volumeDisplay" class="text-white text-sm font-medium">20%</span>
+                        <input type="range" id="volumeSliderNav" min="0" max="100" value="20" 
+                               class="w-16 h-2 bg-white/40 rounded-lg appearance-none cursor-pointer slider border border-white/30">
+                        <span id="volumeDisplayNav" class="text-white text-xs bg-white/30 px-1 py-0.5 rounded min-w-[30px] text-center border border-white/20">20%</span>
+                        <div class="w-px h-3 bg-white/30"></div>
+                        <button id="changeMusicBtn" class="text-white hover:text-blue-200 transition-all duration-300 text-sm hover:scale-110 bg-white/25 hover:bg-white/35 px-1 py-0.5 rounded" title="เปลี่ยนเพลง">
+                            🎵
+                        </button>
                     </div>
                     <button onclick="showPage('shiftSummaryPage')" id="shiftBtn" class="text-white hover:text-blue-200 transition-colors font-medium enhanced-btn bg-white/10 px-4 py-2 rounded-lg mr-2">
                         ⏰ สรุปเวลาเข้าเวร
@@ -281,6 +334,585 @@
         </div>
     </nav>
 
+
+    <!-- Hidden Players -->
+    <div id="youtubePlayer" style="display: none;"></div>
+    <audio id="audioPlayer" style="display: none;" preload="auto"></audio>
+
+    <!-- Music Selection Modal -->
+    <div id="musicModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-3xl font-bold text-gray-800">🎵 เพลงพื้นหลัง</h3>
+                <button onclick="closeMusicModal()" class="text-gray-500 hover:text-gray-700 text-2xl">✕</button>
+            </div>
+
+            <!-- Add Song Section -->
+            <div class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mb-3">➕ เพิ่มเพลงใหม่</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- YouTube URL -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">🎬 จาก YouTube URL</label>
+                        <div class="flex gap-2">
+                            <input 
+                                type="text" 
+                                id="youtubeUrl" 
+                                placeholder="วาง YouTube URL ที่นี่..."
+                                class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            >
+                            <button 
+                                id="addSongBtn"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors"
+                            >
+                                เพิ่ม
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">หมายเหตุ: บางเพลงอาจไม่สามารถเล่นได้เนื่องจากข้อจำกัดของ YouTube</p>
+            </div>
+
+            <!-- Current Playing -->
+            <div class="bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl p-6 mb-6 border border-purple-200">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-lg font-semibold text-gray-800">🎵 กำลังเล่น</h4>
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm text-gray-600">🔊</span>
+                        <input 
+                            type="range" 
+                            id="volumeSliderModal" 
+                            min="0" 
+                            max="100" 
+                            value="20"
+                            class="w-24 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                        >
+                        <span id="volumeDisplayModal" class="text-sm w-8 text-gray-600">20%</span>
+                    </div>
+                </div>
+                
+                <div id="currentSongModal" class="text-center">
+                    <div class="text-lg font-medium mb-2 text-gray-800">ยังไม่มีเพลงที่เล่น</div>
+                    <div class="text-sm text-gray-600">เพิ่มเพลงแรกของคุณเพื่อเริ่มฟัง</div>
+                </div>
+
+                <!-- Player Controls -->
+                <div class="flex justify-center gap-4 mt-6">
+                    <button id="prevBtnModal" class="bg-gray-600 hover:bg-gray-700 text-white p-3 rounded-full transition-colors">
+                        ⏮️
+                    </button>
+                    <button id="playPauseBtnModal" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition-colors">
+                        ▶️
+                    </button>
+                    <button id="nextBtnModal" class="bg-gray-600 hover:bg-gray-700 text-white p-3 rounded-full transition-colors">
+                        ⏭️
+                    </button>
+                    <button id="autoplayBtnModal" class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-full transition-colors" title="เล่นอัตโนมัติ">
+                        🔄
+                    </button>
+                    <button id="loopBtnModal" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition-colors" title="วนซ้ำ">
+                        🔁
+                    </button>
+                </div>
+            </div>
+
+            <!-- Playlist -->
+            <div class="mb-4">
+                <h4 class="text-lg font-semibold text-gray-700 mb-3 flex items-center">
+                    📋 เพลย์ลิสต์
+                    <span id="playlistCountModal" class="ml-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">0</span>
+                </h4>
+                
+                <div id="playlistModal" class="space-y-3 max-h-60 overflow-y-auto">
+                    <div class="text-center text-gray-400 py-8">
+                        <div class="text-4xl mb-2">🎵</div>
+                        <p>เพลย์ลิสต์ว่างเปล่า</p>
+                        <p class="text-sm">เพิ่มเพลงแรกของคุณด้านบน</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex justify-between mt-6">
+                <button onclick="clearMainPlaylist()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm">
+                    🗑️ ล้างเพลย์ลิสต์
+                </button>
+            </div>
+
+            <!-- Close Button -->
+            <div class="flex justify-center mt-6">
+                <button onclick="closeMusicModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-2 rounded-lg">
+                    ปิด
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class MusicSystem {
+            constructor() {
+                this.playlist = [];
+                this.currentIndex = -1;
+                this.player = null;
+                this.audioPlayer = null;
+                this.isPlaying = false;
+                this.volume = 20;
+                this.isPlayerReady = false;
+                this.currentPlayerType = null;
+                this.autoplay = true;
+                this.loop = true;
+                
+                this.initializeElements();
+                this.bindEvents();
+                this.loadYouTubeAPI();
+                this.initializeAudioPlayer();
+                this.addWelcomeSong();
+                this.updateAutoplayButton();
+                this.updateLoopButton();
+            }
+
+            initializeElements() {
+                this.youtubeUrl = document.getElementById('youtubeUrl');
+                this.addSongBtn = document.getElementById('addSongBtn');
+                this.currentSong = document.getElementById('currentSongModal');
+                this.playlistElement = document.getElementById('playlistModal');
+                this.playlistCount = document.getElementById('playlistCountModal');
+                this.volumeSlider = document.getElementById('volumeSliderModal');
+                this.volumeDisplay = document.getElementById('volumeDisplayModal');
+                this.playPauseBtn = document.getElementById('playPauseBtnModal');
+                this.prevBtn = document.getElementById('prevBtnModal');
+                this.nextBtn = document.getElementById('nextBtnModal');
+                this.audioPlayer = document.getElementById('audioPlayer');
+            }
+
+            bindEvents() {
+                this.addSongBtn.addEventListener('click', () => this.addSong());
+                this.youtubeUrl.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.addSong();
+                });
+                this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
+                this.playPauseBtn.addEventListener('click', () => this.togglePlayPause());
+                this.prevBtn.addEventListener('click', () => this.previousSong());
+                this.nextBtn.addEventListener('click', () => this.nextSong());
+                document.getElementById('autoplayBtnModal').addEventListener('click', () => this.toggleAutoplay());
+                document.getElementById('loopBtnModal').addEventListener('click', () => this.toggleLoop());
+                this.bindNavigationEvents();
+            }
+
+            bindNavigationEvents() {
+                document.getElementById('playPauseBtnNav').addEventListener('click', () => {
+                    this.togglePlayPause();
+                });
+                document.getElementById('prevBtnNav').addEventListener('click', () => {
+                    this.previousSong();
+                });
+                document.getElementById('nextBtnNav').addEventListener('click', () => {
+                    this.nextSong();
+                });
+                document.getElementById('muteBtn').addEventListener('click', () => {
+                    if (this.volume > 0) {
+                        this.previousVolume = this.volume;
+                        this.setVolume(0);
+                        document.getElementById('muteBtn').textContent = '🔇';
+                    } else {
+                        this.setVolume(this.previousVolume || 20);
+                        document.getElementById('muteBtn').textContent = '🔊';
+                    }
+                });
+                document.getElementById('volumeSliderNav').addEventListener('input', (e) => {
+                    this.setVolume(e.target.value);
+                });
+                document.getElementById('changeMusicBtn').addEventListener('click', () => {
+                    openMusicModal();
+                });
+                document.getElementById('autoplayBtn').addEventListener('click', () => {
+                    this.toggleAutoplay();
+                });
+                document.getElementById('loopBtn').addEventListener('click', () => {
+                    this.toggleLoop();
+                });
+            }
+
+            initializeAudioPlayer() {
+                this.audioPlayer.addEventListener('ended', () => {
+                    if (this.autoplay) {
+                        this.nextSong();
+                    }
+                });
+                this.audioPlayer.addEventListener('play', () => {
+                    this.isPlaying = true;
+                    this.updatePlayButtons('⏸️');
+                });
+                this.audioPlayer.addEventListener('pause', () => {
+                    this.isPlaying = false;
+                    this.updatePlayButtons('▶️');
+                });
+            }
+
+            updatePlayButtons(text) {
+                this.playPauseBtn.textContent = text;
+                document.getElementById('playPauseBtnNav').textContent = text;
+            }
+
+            loadYouTubeAPI() {
+                if (window.YT) {
+                    this.initializePlayer();
+                    return;
+                }
+
+                const tag = document.createElement('script');
+                tag.src = 'https://www.youtube.com/iframe_api';
+                const firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                window.onYouTubeIframeAPIReady = () => {
+                    this.initializePlayer();
+                };
+            }
+
+            initializePlayer() {
+                this.player = new YT.Player('youtubePlayer', {
+                    height: '0',
+                    width: '0',
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 0,
+                        disablekb: 1,
+                        fs: 0,
+                        modestbranding: 1,
+                        rel: 0
+                    },
+                    events: {
+                        onReady: () => {
+                            this.isPlayerReady = true;
+                            this.player.setVolume(this.volume);
+                            
+                            if (this.playlist.length > 0 && !this.playlist[0].isLocalFile) {
+                                this.loadAndPlay(this.playlist[0].id);
+                            }
+                        },
+                        onStateChange: (event) => {
+                            if (event.data === YT.PlayerState.ENDED) {
+                                if (this.autoplay) {
+                                    this.nextSong();
+                                }
+                            } else if (event.data === YT.PlayerState.PLAYING) {
+                                this.isPlaying = true;
+                                this.updatePlayButtons('⏸️');
+                            } else if (event.data === YT.PlayerState.PAUSED) {
+                                this.isPlaying = false;
+                                this.updatePlayButtons('▶️');
+                            }
+                        }
+                    }
+                });
+            }
+
+            addWelcomeSong() {
+                const welcomeSong = {
+                    id: 'bbadAgQphqY',
+                    title: 'เพลงพื้นหลัง XINTOWN',
+                    url: 'https://youtu.be/bbadAgQphqY?si=0JebRgPV5SbQcsm0',
+                    isLocalFile: false
+                };
+                
+                this.playlist = [welcomeSong];
+                this.currentIndex = 0;
+                this.updatePlaylistDisplay();
+                this.updateCurrentSongDisplay();
+            }
+
+            extractVideoId(url) {
+                const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
+                const match = url.match(regex);
+                return match ? match[1] : null;
+            }
+
+            async addSong() {
+                const url = this.youtubeUrl.value.trim();
+                if (!url) return;
+
+                const videoId = this.extractVideoId(url);
+                if (!videoId) {
+                    alert('กรุณาใส่ลิงก์ YouTube ที่ถูกต้อง');
+                    return;
+                }
+
+                const song = {
+                    id: videoId,
+                    title: `เพลงจาก YouTube - ${videoId}`,
+                    url: url,
+                    isLocalFile: false
+                };
+
+                this.playlist.push(song);
+                
+                if (this.playlist.length === 1 && this.currentIndex === -1) {
+                    this.currentIndex = 0;
+                    this.updateCurrentSongDisplay();
+                    this.playSong(0);
+                }
+
+                this.updatePlaylistDisplay();
+                this.youtubeUrl.value = '';
+            }
+
+            loadAndPlay(videoId) {
+                if (!this.player || !this.isPlayerReady) return;
+                
+                this.stopAllPlayers();
+                this.currentPlayerType = 'youtube';
+                this.player.loadVideoById(videoId);
+                this.player.setVolume(this.volume);
+            }
+
+            stopAllPlayers() {
+                if (this.player && this.isPlayerReady) {
+                    this.player.pauseVideo();
+                }
+                
+                if (this.audioPlayer) {
+                    this.audioPlayer.pause();
+                }
+                
+                this.isPlaying = false;
+                this.updatePlayButtons('▶️');
+            }
+
+            updatePlaylistDisplay() {
+                if (this.playlist.length === 0) {
+                    this.playlistElement.innerHTML = `
+                        <div class="text-center text-gray-400 py-8">
+                            <div class="text-4xl mb-2">🎵</div>
+                            <p>เพลย์ลิสต์ว่างเปล่า</p>
+                            <p class="text-sm">เพิ่มเพลงแรกของคุณด้านบน</p>
+                        </div>
+                    `;
+                    this.playlistCount.textContent = '0';
+                    return;
+                }
+
+                this.playlistElement.innerHTML = this.playlist.map((song, index) => `
+                    <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors ${index === this.currentIndex ? 'ring-2 ring-blue-500 playing' : ''}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">${index === this.currentIndex ? '🎵' : '🎶'}</span>
+                            <div>
+                                <div class="font-medium text-white">${song.title} ${index === 0 ? '🔒' : ''}</div>
+                                <div class="text-sm text-gray-400">${song.isLocalFile ? 'ไฟล์เสียง' : 'YouTube'} ${index === 0 ? '(เพลงเริ่มต้น)' : ''}</div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="musicSystem.playSong(${index})" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm transition-colors">
+                                เล่น
+                            </button>
+                            ${index === 0 ? 
+                                '<button class="bg-gray-500 cursor-not-allowed px-3 py-1 rounded text-sm opacity-50" disabled>🔒 ป้องกัน</button>' :
+                                `<button onclick="musicSystem.removeSong(${index})" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm transition-colors">ลบ</button>`
+                            }
+                        </div>
+                    </div>
+                `).join('');
+
+                this.playlistCount.textContent = this.playlist.length;
+            }
+
+            updateCurrentSongDisplay() {
+                if (this.currentIndex === -1 || !this.playlist[this.currentIndex]) {
+                    this.currentSong.innerHTML = `
+                        <div class="text-lg font-medium mb-2">ยังไม่มีเพลงที่เล่น</div>
+                        <div class="text-sm text-gray-300">เพิ่มเพลงแรกของคุณเพื่อเริ่มฟัง</div>
+                    `;
+                    return;
+                }
+
+                const current = this.playlist[this.currentIndex];
+                this.currentSong.innerHTML = `
+                    <div class="text-lg font-medium mb-2">${current.title}</div>
+                    <div class="text-sm text-gray-300">กำลังเล่นจาก ${current.isLocalFile ? 'ไฟล์เสียง' : 'YouTube'}</div>
+                `;
+            }
+
+            playSong(index) {
+                if (index < 0 || index >= this.playlist.length) return;
+                
+                this.currentIndex = index;
+                this.updateCurrentSongDisplay();
+                this.updatePlaylistDisplay();
+                
+                const song = this.playlist[index];
+                if (song.isLocalFile) {
+                    this.playLocalAudio(song.url);
+                } else {
+                    if (this.isPlayerReady) {
+                        this.loadAndPlay(song.id);
+                    }
+                }
+            }
+
+            removeSong(index) {
+                if (index < 0 || index >= this.playlist.length) return;
+                
+                // ป้องกันการลบเพลงเริ่มต้น (เพลงแรก)
+                if (index === 0) {
+                    alert('ไม่สามารถลบเพลงเริ่มต้นได้');
+                    return;
+                }
+                
+                this.playlist.splice(index, 1);
+                
+                if (index === this.currentIndex) {
+                    this.stopAllPlayers();
+                    if (this.playlist.length === 0) {
+                        this.currentIndex = -1;
+                    } else if (index >= this.playlist.length) {
+                        this.currentIndex = 0;
+                        this.playSong(0);
+                    } else {
+                        this.playSong(index);
+                    }
+                } else if (index < this.currentIndex) {
+                    this.currentIndex--;
+                }
+                
+                this.updatePlaylistDisplay();
+                this.updateCurrentSongDisplay();
+            }
+
+            setVolume(value) {
+                this.volume = parseInt(value);
+                
+                document.getElementById('volumeDisplayModal').textContent = `${this.volume}%`;
+                document.getElementById('volumeDisplayNav').textContent = `${this.volume}%`;
+                
+                this.volumeSlider.value = this.volume;
+                document.getElementById('volumeSliderNav').value = this.volume;
+                
+                if (this.currentPlayerType === 'youtube' && this.player && this.isPlayerReady) {
+                    this.player.setVolume(this.volume);
+                } else if (this.currentPlayerType === 'audio' && this.audioPlayer) {
+                    this.audioPlayer.volume = this.volume / 100;
+                }
+            }
+
+            togglePlayPause() {
+                if (this.currentIndex === -1) return;
+                
+                if (this.currentPlayerType === 'youtube' && this.player && this.isPlayerReady) {
+                    if (this.isPlaying) {
+                        this.player.pauseVideo();
+                    } else {
+                        this.player.playVideo();
+                    }
+                } else if (this.currentPlayerType === 'audio' && this.audioPlayer) {
+                    if (this.isPlaying) {
+                        this.audioPlayer.pause();
+                    } else {
+                        this.audioPlayer.play().catch(e => console.log('Cannot play audio:', e));
+                    }
+                }
+            }
+
+            previousSong() {
+                if (this.playlist.length === 0) return;
+                
+                const newIndex = this.currentIndex > 0 ? this.currentIndex - 1 : this.playlist.length - 1;
+                this.playSong(newIndex);
+            }
+
+            nextSong() {
+                if (this.playlist.length === 0) return;
+                
+                if (this.currentIndex < this.playlist.length - 1) {
+                    this.playSong(this.currentIndex + 1);
+                } else if (this.loop) {
+                    this.playSong(0);
+                }
+            }
+
+            toggleAutoplay() {
+                this.autoplay = !this.autoplay;
+                this.updateAutoplayButton();
+            }
+
+            toggleLoop() {
+                this.loop = !this.loop;
+                this.updateLoopButton();
+            }
+
+            updateAutoplayButton() {
+                const navBtn = document.getElementById('autoplayBtn');
+                const modalBtn = document.getElementById('autoplayBtnModal');
+                
+                if (this.autoplay) {
+                    navBtn.classList.add('bg-green-600/30');
+                    navBtn.classList.remove('bg-gray-600/30');
+                    modalBtn.classList.add('bg-green-600');
+                    modalBtn.classList.remove('bg-gray-600');
+                } else {
+                    navBtn.classList.add('bg-gray-600/30');
+                    navBtn.classList.remove('bg-green-600/30');
+                    modalBtn.classList.add('bg-gray-600');
+                    modalBtn.classList.remove('bg-green-600');
+                }
+            }
+
+            updateLoopButton() {
+                const navBtn = document.getElementById('loopBtn');
+                const modalBtn = document.getElementById('loopBtnModal');
+                
+                if (this.loop) {
+                    navBtn.classList.add('bg-blue-600/30');
+                    navBtn.classList.remove('bg-gray-600/30');
+                    modalBtn.classList.add('bg-blue-600');
+                    modalBtn.classList.remove('bg-gray-600');
+                } else {
+                    navBtn.classList.add('bg-gray-600/30');
+                    navBtn.classList.remove('bg-blue-600/30');
+                    modalBtn.classList.add('bg-gray-600');
+                    modalBtn.classList.remove('bg-blue-600');
+                }
+            }
+        }
+
+        // เริ่มต้นระบบเพลง
+        const musicSystem = new MusicSystem();
+
+
+
+        function openMusicModal() {
+            document.getElementById('musicModal').classList.remove('hidden');
+            musicSystem.updateCurrentSongDisplay();
+            musicSystem.updatePlaylistDisplay();
+        }
+
+        function closeMusicModal() {
+            document.getElementById('musicModal').classList.add('hidden');
+        }
+
+        function clearMainPlaylist() {
+            if (confirm('คุณต้องการล้างเพลงที่เพิ่มเข้ามาทั้งหมดหรือไม่? (เพลงเริ่มต้นจะไม่ถูกลบ)')) {
+                musicSystem.stopAllPlayers();
+                
+                // เก็บเพลงเริ่มต้น (เพลงแรก) ไว้
+                const defaultSong = musicSystem.playlist[0];
+                musicSystem.playlist = [defaultSong];
+                musicSystem.currentIndex = 0;
+                
+                musicSystem.updatePlaylistDisplay();
+                musicSystem.updateCurrentSongDisplay();
+                musicSystem.playSong(0);
+                alert('ล้างเพลงที่เพิ่มเข้ามาเรียบร้อยแล้ว (เพลงเริ่มต้นยังคงอยู่)');
+            }
+        }
+
+        function showPage(pageId) {
+            alert(`กำลังไปยังหน้า: ${pageId}`);
+        }
+
+        function goToHomePage() {
+            alert('กำลังกลับไปหน้าหลัก');
+        }
+    </script>
     <!-- Welcome Screen -->
     <div id="welcomeScreen" class="page-content min-h-screen flex items-center justify-center relative z-10 overflow-hidden">
         <!-- Enhanced Background Elements for Welcome Screen -->
@@ -1122,6 +1754,9 @@
                             <div class="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-500 glow-effect">
                                 <h4 class="font-semibold text-orange-700">เวลาจำคุกรวม</h4>
                                 <p id="totalJail" class="text-2xl font-bold text-orange-600">0 นาที</p>
+                                <div id="redCaseJailInfo" class="hidden mt-2 text-sm text-red-600 font-medium">
+                                    <span id="redCaseJailText"></span>
+                                </div>
                             </div>
                         </div>
 
@@ -1137,6 +1772,9 @@
                             <h4 class="font-semibold text-purple-700 mb-2">💰 ค่าปรับรวมค่าประกัน</h4>
                             <p class="text-sm text-gray-600 mb-2">ค่าปรับ + ค่าประกันตัว</p>
                             <p id="totalWithBail" class="text-3xl font-bold text-purple-600">0 XinCoin</p>
+                            <div id="redCaseJailInfoTotal" class="hidden mt-2 text-sm text-red-600 font-medium">
+                                <span id="redCaseJailTextTotal"></span>
+                            </div>
                         </div>
                     </div>
 
@@ -1323,11 +1961,25 @@
         }
 
         // Music controls
+        let currentMusicType = 'default';
+        let currentMusicName = 'XIN TOWN - SAWMENOW';
+        let musicPlaylist = [
+            {
+                id: 'default',
+                name: 'XIN TOWN - SAWMENOW',
+                type: 'file',
+                source: './XIN TOWN - SAWMENOW.mp3',
+                icon: '🎵',
+                description: 'เพลงประจำระบบ (ไฟล์ต้นฉบับ)'
+            }
+        ];
+        
         function initializeMusicControls() {
             const audio = document.getElementById('backgroundMusic');
             const muteBtn = document.getElementById('muteBtn');
             const volumeSlider = document.getElementById('volumeSlider');
             const volumeDisplay = document.getElementById('volumeDisplay');
+            const changeMusicBtn = document.getElementById('changeMusicBtn');
             
             if (!audio) return;
             
@@ -1373,6 +2025,7 @@
                             musicControls.style.opacity = '1';
                             musicControls.title = 'ควบคุมเพลงพื้นหลัง';
                         }
+                        updateCurrentPlaying();
                     }
                 }, { once: true });
                 
@@ -1393,7 +2046,7 @@
             
             // Mute/unmute button
             muteBtn.addEventListener('click', function() {
-                if (!musicLoaded) {
+                if (!musicLoaded && currentMusicType === 'default') {
                     alert('ไม่พบไฟล์เพลง กรุณาตรวจสอบว่าได้อัพโหลดไฟล์ "XIN TOWN - SAWMENOW.mp3" แล้ว');
                     return;
                 }
@@ -1409,8 +2062,6 @@
             
             // Volume slider
             volumeSlider.addEventListener('input', function() {
-                if (!musicLoaded) return;
-                
                 const volume = this.value / 100;
                 audio.volume = volume;
                 volumeDisplay.textContent = this.value + '%';
@@ -1421,7 +2072,301 @@
                     muteBtn.textContent = '🔊';
                 }
             });
+            
+            // Change music button
+            changeMusicBtn.addEventListener('click', function() {
+                openMusicModal();
+            });
         }
+        
+        // Music modal functions
+        function openMusicModal() {
+            document.getElementById('musicModal').classList.remove('hidden');
+            updateCurrentPlaying();
+            // No tabs needed - direct URL input
+        }
+        
+        function closeMusicModal() {
+            document.getElementById('musicModal').classList.add('hidden');
+        }
+        
+        function updateCurrentPlaying() {
+            const currentPlaying = document.getElementById('currentPlaying');
+            const currentSongName = document.getElementById('currentSongName');
+            
+            if (currentMusicName) {
+                currentPlaying.classList.remove('hidden');
+                currentSongName.textContent = currentMusicName;
+            } else {
+                currentPlaying.classList.add('hidden');
+            }
+        }
+        
+        // Load YouTube music and add to playlist
+        function loadYouTubeMusic() {
+            const youtubeUrl = document.getElementById('youtubeUrl').value.trim();
+            
+            if (!youtubeUrl) {
+                alert('กรุณาใส่ URL ของ YouTube');
+                return;
+            }
+            
+            // Extract video ID from YouTube URL
+            const videoId = extractYouTubeVideoId(youtubeUrl);
+            if (!videoId) {
+                alert('URL ของ YouTube ไม่ถูกต้อง');
+                return;
+            }
+            
+            // Show loading state
+            const loadButton = document.querySelector('button[onclick="loadYouTubeMusic()"]');
+            const originalText = loadButton.textContent;
+            loadButton.textContent = 'กำลังโหลด...';
+            loadButton.disabled = true;
+            
+            // Get video title using YouTube oEmbed API
+            const apiUrl = "https://www.youtube.com/oembed?url=" + encodeURIComponent(youtubeUrl) + "&format=json";
+            
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('ไม่สามารถดึงข้อมูลเพลงได้');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const videoTitle = data.title;
+                    
+                    // Create YouTube embed URL for audio
+                    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`;
+                    
+                    // Add to playlist
+                    const newMusic = {
+                        id: `youtube_${videoId}`,
+                        name: videoTitle,
+                        type: 'youtube',
+                        source: embedUrl,
+                        originalUrl: youtubeUrl,
+                        icon: '🎬',
+                        description: 'เพลงจาก YouTube'
+                    };
+                    
+                    // Check if already exists
+                    const existingIndex = musicPlaylist.findIndex(music => music.id === newMusic.id);
+                    if (existingIndex === -1) {
+                        musicPlaylist.push(newMusic);
+                        updatePlaylistDisplay();
+                        savePlaylistToStorage();
+                        
+                        // Play the new music
+                        playMusicFromPlaylist(newMusic.id);
+                        
+                        alert(`เพิ่มเพลง "${videoTitle}" ลงในรายการแล้ว!`);
+                    } else {
+                        alert('เพลงนี้มีในรายการแล้ว');
+                    }
+                    
+                    // Clear input
+                    document.getElementById('youtubeUrl').value = '';
+                })
+                .catch(error => {
+                    console.error('Error fetching YouTube title:', error);
+                    
+                    // Fallback to manual input if API fails
+                    const videoTitle = prompt('ไม่สามารถดึงชื่อเพลงอัตโนมัติได้ กรุณาใส่ชื่อเพลง:', `YouTube Video ${videoId.substring(0, 8)}`);
+                    if (videoTitle) {
+                        // Create YouTube embed URL for audio
+                        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`;
+                        
+                        // Add to playlist
+                        const newMusic = {
+                            id: `youtube_${videoId}`,
+                            name: videoTitle,
+                            type: 'youtube',
+                            source: embedUrl,
+                            originalUrl: youtubeUrl,
+                            icon: '🎬',
+                            description: 'เพลงจาก YouTube'
+                        };
+                        
+                        // Check if already exists
+                        const existingIndex = musicPlaylist.findIndex(music => music.id === newMusic.id);
+                        if (existingIndex === -1) {
+                            musicPlaylist.push(newMusic);
+                            updatePlaylistDisplay();
+                            savePlaylistToStorage();
+                            
+                            // Play the new music
+                            playMusicFromPlaylist(newMusic.id);
+                            
+                            alert(`เพิ่มเพลง "${videoTitle}" ลงในรายการแล้ว!`);
+                        } else {
+                            alert('เพลงนี้มีในรายการแล้ว');
+                        }
+                        
+                        // Clear input
+                        document.getElementById('youtubeUrl').value = '';
+                    }
+                })
+                .finally(() => {
+                    // Reset button state
+                    loadButton.textContent = originalText;
+                    loadButton.disabled = false;
+                });
+        }
+        
+        // Play music from playlist
+        function playMusicFromPlaylist(musicId) {
+            const music = musicPlaylist.find(m => m.id === musicId);
+            if (!music) return;
+            
+            // Stop current audio/video
+            const audio = document.getElementById('backgroundMusic');
+            audio.pause();
+            
+            const youtubeFrame = document.getElementById('youtubeFrame');
+            if (youtubeFrame) {
+                youtubeFrame.src = '';
+            }
+            
+            if (music.type === 'file') {
+                // Load audio file
+                audio.src = music.source;
+                audio.load();
+                audio.play().catch(error => {
+                    console.log('ไม่สามารถเล่นเพลงได้:', error);
+                    alert('ไม่สามารถเล่นเพลงนี้ได้ อาจเป็นเพราะไฟล์ไม่พบ');
+                });
+            } else if (music.type === 'youtube') {
+                // Load YouTube video
+                if (!youtubeFrame) {
+                    const newFrame = document.createElement('iframe');
+                    newFrame.id = 'youtubeFrame';
+                    newFrame.style.display = 'none';
+                    newFrame.allow = 'autoplay';
+                    document.body.appendChild(newFrame);
+                }
+                document.getElementById('youtubeFrame').src = music.source;
+            }
+            
+            currentMusicType = music.type;
+            currentMusicName = music.name;
+            updateCurrentPlaying();
+            updatePlaylistDisplay(); // Update active state
+        }
+        
+        // Remove music from playlist
+        function removeMusicFromPlaylist(musicId) {
+            if (musicId === 'default') {
+                alert('ไม่สามารถลบเพลงต้นฉบับได้');
+                return;
+            }
+            
+            const musicIndex = musicPlaylist.findIndex(m => m.id === musicId);
+            if (musicIndex === -1) return;
+            
+            const music = musicPlaylist[musicIndex];
+            
+            if (confirm(`ต้องการลบเพลง "${music.name}" ออกจากรายการหรือไม่?`)) {
+                // If currently playing this music, switch to default
+                if (currentMusicName === music.name) {
+                    playMusicFromPlaylist('default');
+                }
+                
+                musicPlaylist.splice(musicIndex, 1);
+                updatePlaylistDisplay();
+                savePlaylistToStorage();
+                
+                alert(`ลบเพลง "${music.name}" ออกจากรายการแล้ว`);
+            }
+        }
+        
+        // Update playlist display
+        function updatePlaylistDisplay() {
+            const container = document.getElementById('musicPlaylistContainer');
+            if (!container) return;
+            
+            let html = '';
+            
+            musicPlaylist.forEach(music => {
+                const isActive = currentMusicName === music.name;
+                const activeClass = isActive ? 'bg-blue-100 border-blue-400' : 'bg-gray-50 hover:bg-blue-50';
+                
+                html += `
+                    <div class="preset-music ${activeClass} p-3 rounded-lg cursor-pointer border transition-all">
+                        <div class="flex justify-between items-center">
+                            <div class="flex-1" onclick="playMusicFromPlaylist('${music.id}')">
+                                <h5 class="font-medium text-gray-800 ${isActive ? 'text-blue-800' : ''}">${music.icon} ${music.name}</h5>
+                                <p class="text-sm text-gray-600">${music.description}</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                ${isActive ? '<span class="text-blue-600 text-sm">🎵 กำลังเล่น</span>' : ''}
+                                ${music.id !== 'default' ? `<button onclick="removeMusicFromPlaylist('${music.id}')" class="text-red-500 hover:text-red-700 text-sm px-2 py-1 rounded" title="ลบเพลง">🗑️</button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Save playlist to localStorage
+        function savePlaylistToStorage() {
+            try {
+                const playlistToSave = musicPlaylist.filter(music => music.id !== 'default'); // Don't save default music
+                localStorage.setItem('xintown_music_playlist', JSON.stringify(playlistToSave));
+            } catch (error) {
+                console.log('ไม่สามารถบันทึกรายการเพลงได้:', error);
+            }
+        }
+        
+        // Load playlist from localStorage
+        function loadPlaylistFromStorage() {
+            try {
+                const savedPlaylist = localStorage.getItem('xintown_music_playlist');
+                if (savedPlaylist) {
+                    const parsedPlaylist = JSON.parse(savedPlaylist);
+                    // Add saved music to playlist (keeping default at the beginning)
+                    musicPlaylist = [musicPlaylist[0], ...parsedPlaylist];
+                    updatePlaylistDisplay();
+                }
+            } catch (error) {
+                console.log('ไม่สามารถโหลดรายการเพลงได้:', error);
+            }
+        }
+        
+        // Clear all playlist except default
+        function clearPlaylist() {
+            if (confirm('ต้องการล้างรายการเพลงทั้งหมดหรือไม่? (ยกเว้นเพลงต้นฉบับ)')) {
+                // Keep only default music
+                musicPlaylist = [musicPlaylist[0]];
+                
+                // Switch to default if currently playing other music
+                const defaultMusic = musicPlaylist[0];
+                if (currentMusicName !== defaultMusic.name) {
+                    playMusicFromPlaylist('default');
+                }
+                
+                updatePlaylistDisplay();
+                savePlaylistToStorage();
+                
+                alert('ล้างรายการเพลงเรียบร้อยแล้ว');
+            }
+        }
+        
+        // Extract YouTube video ID from URL
+        function extractYouTubeVideoId(url) {
+            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[7].length === 11) ? match[7] : null;
+        }
+        
+        // No tab switching needed anymore - only URL input
+        
+        // Search functions removed - only URL input available
+        
+
         
         // Charge database with names and descriptions
         const chargeDatabase = {
@@ -1774,6 +2719,7 @@
             // Separate charges by type
             let baseFine = 0;
             let baseJail = 0;
+            let bailableJail = 0; // Only regular charges and illegal items can be bailed
             let redCaseCharges = [];
             
             // Check for special modifiers
@@ -1794,11 +2740,13 @@
                 } else if (isRedCaseCharge(charge.originalId)) {
                     redCaseCharges.push(charge);
                 } else if (charge.originalId === 'illegalMoney') {
-                    // เงินแดงมีเวลาจำคุกคงที่ 5 นาที
+                    // เงินแดงมีเวลาจำคุกคงที่ 5 นาที และสามารถประกันได้
                     baseJail += charge.jail;
+                    bailableJail += charge.jail;
                 } else if (!charge.special) {
                     baseFine += charge.fine;
                     baseJail += charge.jail;
+                    bailableJail += charge.jail; // Regular charges can be bailed
                 }
             });
             
@@ -1839,8 +2787,11 @@
                 }
             });
             
-            // Calculate bail amount (jail time × 2,000)
-            const bailAmount = totalJail * 2000;
+            // Check if there are red case charges
+            const hasRedCases = redCaseCharges.length > 0;
+            
+            // Calculate bail amount (only for bailable charges)
+            const bailAmount = bailableJail * 2000;
             
             // Calculate total with bail
             const totalWithBail = totalFine + bailAmount;
@@ -1848,8 +2799,31 @@
             // Update display elements
             document.getElementById('totalFine').textContent = totalFine.toLocaleString() + ' XinCoin';
             document.getElementById('totalJail').textContent = totalJail.toLocaleString() + ' นาที';
-            document.getElementById('bailAmount').textContent = bailAmount.toLocaleString() + ' XinCoin';
-            document.getElementById('totalWithBail').textContent = totalWithBail.toLocaleString() + ' XinCoin';
+            
+            // Update bail display based on red case presence
+            const bailAmountElement = document.getElementById('bailAmount');
+            const bailContainer = bailAmountElement.closest('.bg-green-50');
+            const bailDescription = bailContainer.querySelector('p');
+            
+            if (hasRedCases) {
+                bailAmountElement.textContent = bailAmount.toLocaleString() + ' XinCoin';
+                bailDescription.innerHTML = `คำนวณจากเวลาจำคุกที่สามารถประกันได้ (${bailableJail} นาที × 2,000 XinCoin)<br><span class="text-red-600 font-medium">⚠️ หมายเหตุ: คดีแดงไม่สามารถประกันได้</span>`;
+            } else {
+                bailAmountElement.textContent = bailAmount.toLocaleString() + ' XinCoin';
+                bailDescription.textContent = `คำนวณจากเวลาจำคุก (${totalJail} นาที × 2,000 XinCoin)`;
+            }
+            
+            // Update total with bail and red case jail info display
+            const redCaseJailInfoTotal = document.getElementById('redCaseJailInfoTotal');
+            const redCaseJailTextTotal = document.getElementById('redCaseJailTextTotal');
+            
+            if (hasRedCases && redCaseJail > 0) {
+                document.getElementById('totalWithBail').textContent = totalWithBail.toLocaleString() + ' XinCoin + คดีแดง ' + redCaseJail + ' นาที';
+                redCaseJailInfoTotal.classList.add('hidden'); // Hide the separate red case info
+            } else {
+                document.getElementById('totalWithBail').textContent = totalWithBail.toLocaleString() + ' XinCoin';
+                redCaseJailInfoTotal.classList.add('hidden');
+            }
             
             // Show results
             document.getElementById('noCalculation').classList.add('hidden');
@@ -2342,6 +3316,12 @@ Username :
             // Initialize music controls
             initializeMusicControls();
             
+            // Load saved playlist
+            loadPlaylistFromStorage();
+            
+            // Initialize playlist display
+            updatePlaylistDisplay();
+            
             // Initialize search
             initializeSearch();
             
@@ -2355,7 +3335,10 @@ Username :
                     switchCategory(category);
                 });
             });
+            
+            // Load auto-play setting on initialization
+            loadAutoPlaySetting();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98925483a723a1c2',t:'MTc1OTU1NjI3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9892f445328ba1c2',t:'MTc1OTU2MjgxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
